@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Couple Surprise ❤️</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #ff758c, #ff7eb3);
+      color: #333;
+      padding: 20px;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 430px;
+      background: white;
+      padding: 30px 25px;
+      border-radius: 24px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.18);
+      text-align: center;
+    }
+
+    .heart {
+      font-size: 55px;
+      animation: beat 1.2s infinite;
+    }
+
+    @keyframes beat {
+      0%, 100% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.15);
+      }
+    }
+
+    h1 {
+      margin: 10px 0;
+      color: #ff477e;
+    }
+
+    p {
+      font-size: 17px;
+      line-height: 1.6;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      padding: 13px;
+      margin-top: 10px;
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      font-size: 15px;
+      outline: none;
+    }
+
+    textarea {
+      height: 110px;
+      resize: none;
+    }
+
+    button {
+      width: 100%;
+      border: none;
+      padding: 14px;
+      margin-top: 15px;
+      border-radius: 12px;
+      background: #ff477e;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #e9366c;
+    }
+
+    #result {
+      display: none;
+      margin-top: 20px;
+      padding: 15px;
+      background: #fff1f5;
+      border-radius: 12px;
+      word-break: break-all;
+    }
+
+    .small {
+      font-size: 13px;
+      color: #777;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="card">
+
+    <div class="heart">❤️</div>
+
+    <h1 id="title">Couple Surprise</h1>
+
+    <div id="creator">
+
+      <p>
+        Create a cute surprise link for your special person 💕
+      </p>
+
+      <input
+        id="name"
+        type="text"
+        placeholder="Your partner's name"
+      >
+
+      <textarea
+        id="message"
+        placeholder="Write your special message..."
+      ></textarea>
+
+      <button onclick="createLink()">
+        Create My Surprise ❤️
+      </button>
+
+      <div id="result">
+        <p><b>Your surprise link is ready! 🎉</b></p>
+
+        <input id="generatedLink" readonly>
+
+        <button onclick="copyLink()">
+          Copy Link
+        </button>
+      </div>
+
+    </div>
+
+    <div id="surprise" style="display:none;">
+
+      <h1 id="partnerName"></h1>
+
+      <p id="partnerMessage"></p>
+
+      <div style="font-size:45px; margin-top:20px;">
+        💕 🥰 💕
+      </div>
+
+      <p class="small">
+        Made with ❤️
+      </p>
+
+    </div>
+
+  </div>
+
+<script>
+
+function encodeData(data) {
+  return btoa(
+    encodeURIComponent(JSON.stringify(data))
+  );
+}
+
+function decodeData(data) {
+  return JSON.parse(
+    decodeURIComponent(atob(data))
+  );
+}
+
+function createLink() {
+
+  const name = document.getElementById("name").value.trim();
+  const message = document.getElementById("message").value.trim();
+
+  if (!name || !message) {
+    alert("Please enter name and message ❤️");
+    return;
+  }
+
+  const data = {
+    n: name,
+    m: message
+  };
+
+  const encoded = encodeData(data);
+
+  const link =
+    window.location.origin +
+    window.location.pathname +
+    "?d=" +
+    encodeURIComponent(encoded);
+
+  document.getElementById("generatedLink").value = link;
+
+  document.getElementById("result").style.display = "block";
+}
+
+function copyLink() {
+
+  const input = document.getElementById("generatedLink");
+
+  navigator.clipboard.writeText(input.value);
+
+  alert("Link copied! ❤️");
+}
+
+function loadSurprise() {
+
+  const params = new URLSearchParams(window.location.search);
+  const data = params.get("d");
+
+  if (!data) return;
+
+  try {
+
+    const decoded = decodeData(data);
+
+    document.getElementById("creator").style.display = "none";
+    document.getElementById("surprise").style.display = "block";
+
+    document.getElementById("partnerName").innerText =
+      "Hey " + decoded.n + " ❤️";
+
+    document.getElementById("partnerMessage").innerText =
+      decoded.m;
+
+  } catch (error) {
+
+    console.log("Invalid link");
+
+  }
+}
+
+loadSurprise();
+
+</script>
+
+</body>
+</html>
