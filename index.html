@@ -1371,24 +1371,6 @@ function createConfetti(){
 
 });
 
-function continuePage(){
-
-  const senderName =
-    sender.value.trim();
-
-  const partnerName =
-    partner.value.trim();
-
-  const personalMessage =
-    message.value.trim();
-
-  let selectedQuestion =
-    question.value;
-
-  if(question.value === "custom"){
-    selectedQuestion =
-      customQuestion.value.trim();
-  }
 sender.addEventListener(
   "input",
   updatePreview
