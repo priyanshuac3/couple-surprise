@@ -1139,291 +1139,331 @@ select:focus{
 
 </div>
   
-
 <script>
+const sender = document.getElementById("sender");
+const partner = document.getElementById("partner");
+const question = document.getElementById("question");
+const customQuestion = document.getElementById("customQuestion");
+const customQuestionBox = document.getElementById("customQuestionBox");
+const message = document.getElementById("message");
 
-const sender =
-document.getElementById("sender");
-
-const partner =
-document.getElementById("partner");
-
-const question =
-document.getElementById("question");
-
-const customQuestion =
-document.getElementById("customQuestion");
-
-const customQuestionBox =
-document.getElementById("customQuestionBox");
-
-const message =
-document.getElementById("message");
-
-const previewQuestion =
-document.getElementById("previewQuestion");
-
-const previewMessage =
-document.getElementById("previewMessage");
-
-const previewFrom =
-document.getElementById("previewFrom");
+const previewQuestion = document.getElementById("previewQuestion");
+const previewMessage = document.getElementById("previewMessage");
+const previewFrom = document.getElementById("previewFrom");
 
 
-function updatePreview(){
+// ===============================
+// LIVE PREVIEW
+// ===============================
 
-  let q = question.value;
+function updatePreview() {
 
-  if(q === "custom"){
-    q =
-      customQuestion.value ||
-      "Your question will appear here...";
-  }
+    let q = question.value;
 
-  const name =
-    partner.value ||
-    "Your special person";
+    if (q === "custom") {
+        q =
+            customQuestion.value.trim() ||
+            "Your question will appear here...";
+    }
 
-  previewQuestion.textContent =
-    q.replace(/\?$/,"") +
-    ", " +
-    name +
-    "?";
+    const name =
+        partner.value.trim() ||
+        "Your special person";
 
-  previewMessage.textContent =
-    message.value ||
-    "Your personal message will appear here...";
+    previewQuestion.textContent =
+        q.replace(/\?$/, "") + ", " + name + "?";
 
-  previewFrom.textContent =
-    sender.value
-      ? "— From " + sender.value + " 💕"
-      : "— From someone special 💕";
+    previewMessage.textContent =
+        message.value.trim() ||
+        "Your personal message will appear here...";
+
+    previewFrom.textContent =
+        sender.value.trim()
+            ? "— From " + sender.value.trim() + " 💕"
+            : "— From someone special 💕";
 }
 
 
-question.addEventListener("change",()=>{
+// ===============================
+// QUESTION CHANGE
+// ===============================
 
-  if(question.value === "custom"){
-    customQuestionBox.classList.remove("hidden");
-    customQuestion.focus();
-  }else{
-    customQuestionBox.classList.add("hidden");
-  }
-/* LOVE PAGE FLOW */
+question.addEventListener("change", function () {
 
-function continuePage(){
+    if (question.value === "custom") {
 
-  const senderName =
-    sender.value.trim();
+        customQuestionBox.classList.remove("hidden");
+        customQuestion.focus();
 
-  const partnerName =
-    partner.value.trim();
+    } else {
 
-  const personalMessage =
-    message.value.trim();
+        customQuestionBox.classList.add("hidden");
 
-  let selectedQuestion =
-    question.value;
+    }
 
-  if(question.value === "custom"){
-    selectedQuestion =
-      customQuestion.value.trim();
-  }
-
-  if(!senderName){
-    alert("Please enter your name ❤️");
-    sender.focus();
-    return;
-  }
-
-  if(!partnerName){
-    alert("Please enter their name ❤️");
-    partner.focus();
-    return;
-  }
-
-  if(!selectedQuestion){
-    alert("Please enter your question ❤️");
-    return;
-  }
-
-  if(!personalMessage){
-    alert("Please write your personal message ❤️");
-    message.focus();
-    return;
-  }
-
-  document.querySelector(".container").style.display =
-    "none";
-
-  const loveScreen =
-    document.getElementById("loveScreen");
-
-  loveScreen.classList.remove("hidden");
-
-  document.getElementById("loveQuestion").innerText =
-    selectedQuestion.replace(/\?$/,"") +
-    ", " +
-    partnerName +
-    "?";
-
-  document.getElementById("loveFrom").innerText =
-    "From " + senderName + " 💕";
-
-  document.getElementById("successMessage").innerText =
-    personalMessage;
-
-}
-
-
-function sayYes(){
-
-  document
-    .getElementById("loveScreen")
-    .classList.add("hidden");
-
-  document
-    .getElementById("successScreen")
-    .classList.remove("hidden");
-
-  createConfetti();
-
-}
-
-
-function moveNoButton(){
-
-  const button =
-    document.getElementById("noBtn");
-
-  const x =
-    Math.random() * 120 - 60;
-
-  const y =
-    Math.random() * 80 - 40;
-
-  button.style.transform =
-    `translate(${x}px,${y}px)`;
-
-}
-
-
-function createConfetti(){
-
-  const emojis =
-    ["❤️","💕","💖","💗","✨","🎉"];
-
-  for(let i=0;i<35;i++){
-
-    const item =
-      document.createElement("div");
-
-    item.innerText =
-      emojis[
-        Math.floor(
-          Math.random()*emojis.length
-        )
-      ];
-
-    item.style.position =
-      "fixed";
-
-    item.style.left =
-      Math.random()*100 + "vw";
-
-    item.style.top =
-      "-30px";
-
-    item.style.fontSize =
-      (15 + Math.random()*20) + "px";
-
-    item.style.zIndex =
-      "100";
-
-    item.style.pointerEvents =
-      "none";
-
-    item.style.transition =
-      "transform 3s linear, opacity 3s";
-
-    document.body.appendChild(item);
-
-    setTimeout(()=>{
-
-      item.style.transform =
-        `translateY(${window.innerHeight + 100}px)
-         rotate(${Math.random()*720}deg)`;
-
-      item.style.opacity="0";
-
-    },50);
-
-    setTimeout(()=>{
-
-      item.remove();
-
-    },3200);
-
-  }
-
-}
-  updatePreview();
-
+    updatePreview();
 });
 
-sender.addEventListener(
-  "input",
-  updatePreview
-);
 
-partner.addEventListener(
-  "input",
-  updatePreview
-);
+// ===============================
+// INPUT LIVE UPDATE
+// ===============================
 
-customQuestion.addEventListener(
-  "input",
-  updatePreview
-);
+sender.addEventListener("input", updatePreview);
+partner.addEventListener("input", updatePreview);
+customQuestion.addEventListener("input", updatePreview);
+message.addEventListener("input", updatePreview);
 
-message.addEventListener(
-  "input",
-  updatePreview
-);
 
-  if(!senderName){
-    alert("Please enter your name ❤️");
-    sender.focus();
-    return;
-  }
+// ===============================
+// CONTINUE BUTTON
+// ===============================
 
-  if(!partnerName){
-    alert("Please enter their name ❤️");
-    partner.focus();
-    return;
-  }
+function continuePage() {
 
-  if(!selectedQuestion){
-    alert("Please enter your question ❤️");
-    return;
-  }
+    const senderName =
+        sender.value.trim();
 
-  if(!personalMessage){
-    alert("Please write your personal message ❤️");
-    message.focus();
-    return;
-  }
+    const partnerName =
+        partner.value.trim();
 
-  alert(
-    "Your Love Page is ready! ❤️"
-  );
+    const personalMessage =
+        message.value.trim();
 
+    let selectedQuestion =
+        question.value;
+
+
+    // Custom question
+    if (question.value === "custom") {
+
+        selectedQuestion =
+            customQuestion.value.trim();
+
+    }
+
+
+    // ===============================
+    // VALIDATION
+    // ===============================
+
+    if (!senderName) {
+
+        alert("Please enter your name ❤️");
+        sender.focus();
+        return;
+
+    }
+
+
+    if (!partnerName) {
+
+        alert("Please enter their name ❤️");
+        partner.focus();
+        return;
+
+    }
+
+
+    if (!selectedQuestion) {
+
+        alert("Please enter your question ❤️");
+
+        if (question.value === "custom") {
+            customQuestion.focus();
+        }
+
+        return;
+
+    }
+
+
+    if (!personalMessage) {
+
+        alert("Please write your personal message ❤️");
+        message.focus();
+        return;
+
+    }
+
+
+    // ===============================
+    // HIDE MAIN PAGE
+    // ===============================
+
+    const container =
+        document.querySelector(".container");
+
+    container.style.display = "none";
+
+
+    // ===============================
+    // SHOW LOVE SCREEN
+    // ===============================
+
+    const loveScreen =
+        document.getElementById("loveScreen");
+
+    loveScreen.classList.remove("hidden");
+
+
+    // ===============================
+    // SET LOVE QUESTION
+    // ===============================
+
+    document.getElementById("loveQuestion").textContent =
+        selectedQuestion.replace(/\?$/, "") +
+        ", " +
+        partnerName +
+        "?";
+
+
+    // ===============================
+    // SET SENDER NAME
+    // ===============================
+
+    document.getElementById("loveFrom").textContent =
+        "From " +
+        senderName +
+        " 💕";
+
+
+    // ===============================
+    // SET SUCCESS MESSAGE
+    // ===============================
+
+    document.getElementById("successMessage").textContent =
+        personalMessage;
 }
 
+
+// ===============================
+// YES BUTTON
+// ===============================
+
+function sayYes() {
+
+    const loveScreen =
+        document.getElementById("loveScreen");
+
+    const successScreen =
+        document.getElementById("successScreen");
+
+
+    loveScreen.classList.add("hidden");
+
+    successScreen.classList.remove("hidden");
+
+
+    createConfetti();
+}
+
+
+// ===============================
+// NO BUTTON
+// ===============================
+
+function moveNoButton() {
+
+    const button =
+        document.getElementById("noBtn");
+
+
+    const x =
+        Math.random() * 180 - 90;
+
+    const y =
+        Math.random() * 120 - 60;
+
+
+    button.style.transform =
+        `translate(${x}px, ${y}px)`;
+}
+
+
+// ===============================
+// CONFETTI
+// ===============================
+
+function createConfetti() {
+
+    const emojis = [
+        "❤️",
+        "💕",
+        "💖",
+        "💗",
+        "✨",
+        "🎉",
+        "🥰",
+        "💝"
+    ];
+
+
+    for (let i = 0; i < 35; i++) {
+
+        const item =
+            document.createElement("div");
+
+
+        item.textContent =
+            emojis[
+                Math.floor(
+                    Math.random() * emojis.length
+                )
+            ];
+
+
+        item.style.position = "fixed";
+
+        item.style.left =
+            Math.random() * 100 + "vw";
+
+        item.style.top = "-30px";
+
+        item.style.fontSize =
+            (15 + Math.random() * 20) + "px";
+
+        item.style.zIndex = "100";
+
+        item.style.pointerEvents = "none";
+
+        item.style.transition =
+            "transform 3s linear, opacity 3s";
+
+
+        document.body.appendChild(item);
+
+
+        setTimeout(function () {
+
+            item.style.transform =
+                `translateY(${window.innerHeight + 100}px)
+                 rotate(${Math.random() * 720}deg)`;
+
+            item.style.opacity = "0";
+
+        }, 50);
+
+
+        setTimeout(function () {
+
+            item.remove();
+
+        }, 3200);
+
+    }
+}
+
+
+// ===============================
+// INITIAL PREVIEW
+// ===============================
 
 updatePreview();
 
 </script>
+
+
 
 </body>
 </html>
