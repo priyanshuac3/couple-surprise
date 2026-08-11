@@ -554,6 +554,337 @@ select:focus{
     scroll-behavior:auto !important;
   }
 }
+  /* LOVE QUESTION SCREEN */
+
+.love-screen,
+.success-screen{
+  position:fixed;
+  inset:0;
+
+  z-index:50;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  padding:20px;
+
+  background:
+    radial-gradient(
+      circle at 20% 20%,
+      rgba(255,160,195,.65),
+      transparent 35%
+    ),
+    radial-gradient(
+      circle at 80% 80%,
+      rgba(255,190,215,.65),
+      transparent 35%
+    ),
+    rgba(255,242,247,.94);
+
+  backdrop-filter:blur(15px);
+
+  animation:screenIn .6s ease both;
+}
+
+.love-card,
+.success-card{
+
+  width:100%;
+  max-width:460px;
+
+  padding:38px 25px;
+
+  text-align:center;
+
+  border-radius:30px;
+
+  background:rgba(255,255,255,.84);
+
+  border:1px solid rgba(255,255,255,.95);
+
+  box-shadow:
+    0 30px 80px rgba(150,50,90,.18);
+
+  animation:loveCardIn .7s cubic-bezier(.2,.8,.2,1) both;
+}
+
+.big-heart{
+
+  font-size:70px;
+
+  animation:
+    heartbeat 1.5s infinite;
+
+  filter:
+    drop-shadow(
+      0 12px 20px
+      rgba(255,60,120,.2)
+    );
+}
+
+.tiny-hearts{
+
+  margin-top:5px;
+
+  color:#ff6d99;
+
+  letter-spacing:8px;
+
+  font-size:17px;
+
+  animation:floatTiny 2.5s ease-in-out infinite;
+}
+
+.love-small{
+
+  margin-top:22px;
+
+  color:#a0848e;
+
+  font-size:13px;
+
+  letter-spacing:.5px;
+}
+
+.love-card h2,
+.success-card h2{
+
+  margin-top:12px;
+
+  font-family:'Playfair Display',serif;
+
+  font-size:30px;
+
+  line-height:1.25;
+
+  color:#3b252e;
+}
+
+#loveFrom{
+
+  margin-top:12px;
+
+  color:#a28791;
+
+  font-size:13px;
+}
+
+.love-buttons{
+
+  display:flex;
+
+  gap:12px;
+
+  margin-top:30px;
+}
+
+.yes-btn,
+.no-btn{
+
+  flex:1;
+
+  border:0;
+
+  padding:15px 10px;
+
+  border-radius:15px;
+
+  font-family:inherit;
+
+  font-size:15px;
+
+  font-weight:700;
+
+  cursor:pointer;
+
+  transition:
+    transform .2s,
+    box-shadow .2s;
+}
+
+.yes-btn{
+
+  color:white;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ff477e,
+      #ff729f
+    );
+
+  box-shadow:
+    0 10px 25px
+    rgba(255,71,126,.25);
+}
+
+.yes-btn:hover{
+
+  transform:
+    translateY(-3px)
+    scale(1.02);
+
+  box-shadow:
+    0 15px 30px
+    rgba(255,71,126,.35);
+}
+
+.no-btn{
+
+  color:#765c66;
+
+  background:#fff0f4;
+
+  border:1px solid #ffd4e1;
+
+}
+
+.no-btn:hover{
+
+  transform:translateY(-2px);
+
+}
+
+.success-screen{
+
+  background:
+    radial-gradient(
+      circle at center,
+      #fff1f6,
+      #ffdce8
+    );
+}
+
+.success-heart{
+
+  font-size:75px;
+
+  animation:
+    heartbeat 1.2s infinite;
+}
+
+.celebration{
+
+  font-size:27px;
+
+  animation:
+    celebrationPop .8s ease both;
+}
+
+.success-card h2{
+
+  color:#ff477e;
+
+}
+
+#successMessage{
+
+  margin-top:15px;
+
+  color:#78636c;
+
+  font-size:15px;
+
+  line-height:1.6;
+
+}
+
+.success-hearts{
+
+  margin-top:22px;
+
+  font-size:22px;
+
+  letter-spacing:5px;
+
+  animation:
+    floatTiny 2s ease-in-out infinite;
+}
+
+@keyframes screenIn{
+
+  from{
+    opacity:0;
+  }
+
+  to{
+    opacity:1;
+  }
+
+}
+
+@keyframes loveCardIn{
+
+  from{
+    opacity:0;
+    transform:
+      translateY(30px)
+      scale(.94);
+  }
+
+  to{
+    opacity:1;
+    transform:
+      translateY(0)
+      scale(1);
+  }
+
+}
+
+@keyframes floatTiny{
+
+  0%,100%{
+    transform:translateY(0);
+  }
+
+  50%{
+    transform:translateY(-5px);
+  }
+
+}
+
+@keyframes celebrationPop{
+
+  0%{
+    transform:scale(.5);
+    opacity:0;
+  }
+
+  70%{
+    transform:scale(1.15);
+  }
+
+  100%{
+    transform:scale(1);
+    opacity:1;
+  }
+
+}
+
+.love-screen.hidden,
+.success-screen.hidden{
+  display:none;
+}
+
+@media(max-width:420px){
+
+  .love-card,
+  .success-card{
+    padding:32px 20px;
+  }
+
+  .love-card h2,
+  .success-card h2{
+    font-size:26px;
+  }
+
+  .big-heart,
+  .success-heart{
+    font-size:62px;
+  }
+
+}
 </style>
 </head>
 
@@ -731,7 +1062,83 @@ select:focus{
   </div>
 
 </div>
+<!-- LOVE QUESTION SCREEN -->
 
+<div id="loveScreen" class="love-screen hidden">
+
+  <div class="love-card">
+
+    <div class="big-heart">❤️</div>
+
+    <div class="tiny-hearts">♡ ♥ ♡</div>
+
+    <p class="love-small">
+      A little question for you...
+    </p>
+
+    <h2 id="loveQuestion">
+      Will you be mine forever?
+    </h2>
+
+    <p id="loveFrom">
+      From someone special 💕
+    </p>
+
+    <div class="love-buttons">
+
+      <button
+        id="yesBtn"
+        class="yes-btn"
+        onclick="sayYes()"
+      >
+        YES ❤️
+      </button>
+
+      <button
+        id="noBtn"
+        class="no-btn"
+        onclick="moveNoButton()"
+      >
+        NO 😏
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- SUCCESS SCREEN -->
+
+<div id="successScreen" class="success-screen hidden">
+
+  <div class="success-card">
+
+    <div class="celebration">
+      🎉 💕 🎉
+    </div>
+
+    <div class="success-heart">
+      ❤️
+    </div>
+
+    <h2>
+      I Knew You'd Say YES! 🥰
+    </h2>
+
+    <p id="successMessage">
+      You just made someone very happy. ❤️
+    </p>
+
+    <div class="success-hearts">
+      💕 ❤️ 💕 ❤️ 💕
+    </div>
+
+  </div>
+
+</div>
+  
 
 <script>
 
@@ -802,7 +1209,164 @@ question.addEventListener("change",()=>{
   }else{
     customQuestionBox.classList.add("hidden");
   }
+/* LOVE PAGE FLOW */
 
+function continuePage(){
+
+  const senderName =
+    sender.value.trim();
+
+  const partnerName =
+    partner.value.trim();
+
+  const personalMessage =
+    message.value.trim();
+
+  let selectedQuestion =
+    question.value;
+
+  if(question.value === "custom"){
+    selectedQuestion =
+      customQuestion.value.trim();
+  }
+
+  if(!senderName){
+    alert("Please enter your name ❤️");
+    sender.focus();
+    return;
+  }
+
+  if(!partnerName){
+    alert("Please enter their name ❤️");
+    partner.focus();
+    return;
+  }
+
+  if(!selectedQuestion){
+    alert("Please enter your question ❤️");
+    return;
+  }
+
+  if(!personalMessage){
+    alert("Please write your personal message ❤️");
+    message.focus();
+    return;
+  }
+
+  document.querySelector(".container").style.display =
+    "none";
+
+  const loveScreen =
+    document.getElementById("loveScreen");
+
+  loveScreen.classList.remove("hidden");
+
+  document.getElementById("loveQuestion").innerText =
+    selectedQuestion.replace(/\?$/,"") +
+    ", " +
+    partnerName +
+    "?";
+
+  document.getElementById("loveFrom").innerText =
+    "From " + senderName + " 💕";
+
+  document.getElementById("successMessage").innerText =
+    personalMessage;
+
+}
+
+
+function sayYes(){
+
+  document
+    .getElementById("loveScreen")
+    .classList.add("hidden");
+
+  document
+    .getElementById("successScreen")
+    .classList.remove("hidden");
+
+  createConfetti();
+
+}
+
+
+function moveNoButton(){
+
+  const button =
+    document.getElementById("noBtn");
+
+  const x =
+    Math.random() * 120 - 60;
+
+  const y =
+    Math.random() * 80 - 40;
+
+  button.style.transform =
+    `translate(${x}px,${y}px)`;
+
+}
+
+
+function createConfetti(){
+
+  const emojis =
+    ["❤️","💕","💖","💗","✨","🎉"];
+
+  for(let i=0;i<35;i++){
+
+    const item =
+      document.createElement("div");
+
+    item.innerText =
+      emojis[
+        Math.floor(
+          Math.random()*emojis.length
+        )
+      ];
+
+    item.style.position =
+      "fixed";
+
+    item.style.left =
+      Math.random()*100 + "vw";
+
+    item.style.top =
+      "-30px";
+
+    item.style.fontSize =
+      (15 + Math.random()*20) + "px";
+
+    item.style.zIndex =
+      "100";
+
+    item.style.pointerEvents =
+      "none";
+
+    item.style.transition =
+      "transform 3s linear, opacity 3s";
+
+    document.body.appendChild(item);
+
+    setTimeout(()=>{
+
+      item.style.transform =
+        `translateY(${window.innerHeight + 100}px)
+         rotate(${Math.random()*720}deg)`;
+
+      item.style.opacity="0";
+
+    },50);
+
+    setTimeout(()=>{
+
+      item.remove();
+
+    },3200);
+
+  }
+
+}
   updatePreview();
 
 });
@@ -827,26 +1391,6 @@ message.addEventListener(
   "input",
   updatePreview
 );
-
-
-function continuePage(){
-
-  const senderName =
-    sender.value.trim();
-
-  const partnerName =
-    partner.value.trim();
-
-  const personalMessage =
-    message.value.trim();
-
-  let selectedQuestion =
-    question.value;
-
-  if(question.value === "custom"){
-    selectedQuestion =
-      customQuestion.value.trim();
-  }
 
   if(!senderName){
     alert("Please enter your name ❤️");
