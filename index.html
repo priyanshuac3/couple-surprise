@@ -1,248 +1,413 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Couple Surprise ❤️</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+<title>LovePage ❤️</title>
 
-    body {
-      margin: 0;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #ff758c, #ff7eb3);
-      color: #333;
-      padding: 20px;
-    }
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
 
-    .card {
-      width: 100%;
-      max-width: 430px;
-      background: white;
-      padding: 30px 25px;
-      border-radius: 24px;
-      box-shadow: 0 15px 40px rgba(0,0,0,0.18);
-      text-align: center;
-    }
+body{
+  min-height:100vh;
+  font-family:Arial,Helvetica,sans-serif;
+  background:linear-gradient(135deg,#fff0f5,#ffe4ec,#fff);
+  color:#29202a;
+  padding:20px;
+}
 
-    .heart {
-      font-size: 55px;
-      animation: beat 1.2s infinite;
-    }
+.container{
+  width:100%;
+  max-width:480px;
+  margin:auto;
+}
 
-    @keyframes beat {
-      0%, 100% {
-        transform: scale(1);
-      }
-      50% {
-        transform: scale(1.15);
-      }
-    }
+.header{
+  text-align:center;
+  padding:20px 0;
+}
 
-    h1 {
-      margin: 10px 0;
-      color: #ff477e;
-    }
+.logo{
+  font-size:30px;
+  font-weight:800;
+  color:#ff477e;
+}
 
-    p {
-      font-size: 17px;
-      line-height: 1.6;
-    }
+.subtitle{
+  margin-top:8px;
+  color:#777;
+  font-size:14px;
+}
 
-    input,
-    textarea {
-      width: 100%;
-      padding: 13px;
-      margin-top: 10px;
-      border: 1px solid #ddd;
-      border-radius: 12px;
-      font-size: 15px;
-      outline: none;
-    }
+.card{
+  background:rgba(255,255,255,.94);
+  border-radius:28px;
+  padding:25px;
+  box-shadow:0 15px 45px rgba(120,40,70,.12);
+  border:1px solid rgba(255,255,255,.8);
+}
 
-    textarea {
-      height: 110px;
-      resize: none;
-    }
+.heart{
+  text-align:center;
+  font-size:50px;
+  margin-bottom:10px;
+  animation:beat 1.5s infinite;
+}
 
-    button {
-      width: 100%;
-      border: none;
-      padding: 14px;
-      margin-top: 15px;
-      border-radius: 12px;
-      background: #ff477e;
-      color: white;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-    }
+@keyframes beat{
+  0%,100%{transform:scale(1)}
+  50%{transform:scale(1.12)}
+}
 
-    button:hover {
-      background: #e9366c;
-    }
+h1{
+  text-align:center;
+  font-size:27px;
+  margin-bottom:8px;
+}
 
-    #result {
-      display: none;
-      margin-top: 20px;
-      padding: 15px;
-      background: #fff1f5;
-      border-radius: 12px;
-      word-break: break-all;
-    }
+.description{
+  text-align:center;
+  color:#777;
+  font-size:14px;
+  line-height:1.5;
+  margin-bottom:25px;
+}
 
-    .small {
-      font-size: 13px;
-      color: #777;
-    }
-  </style>
+label{
+  display:block;
+  font-size:14px;
+  font-weight:bold;
+  margin:16px 0 7px;
+}
+
+input,textarea,select{
+  width:100%;
+  padding:14px;
+  border:1px solid #e4d9de;
+  border-radius:14px;
+  font-size:15px;
+  outline:none;
+  background:#fff;
+}
+
+input:focus,
+textarea:focus,
+select:focus{
+  border-color:#ff6d98;
+  box-shadow:0 0 0 3px rgba(255,71,126,.08);
+}
+
+textarea{
+  min-height:110px;
+  resize:vertical;
+}
+
+.btn{
+  width:100%;
+  border:0;
+  border-radius:15px;
+  padding:15px;
+  margin-top:22px;
+  background:linear-gradient(135deg,#ff477e,#ff6b9a);
+  color:white;
+  font-size:16px;
+  font-weight:bold;
+  cursor:pointer;
+  box-shadow:0 8px 20px rgba(255,71,126,.25);
+}
+
+.btn:active{
+  transform:scale(.98);
+}
+
+.preview{
+  margin-top:25px;
+  padding:20px;
+  border-radius:20px;
+  background:#fff5f8;
+  border:1px dashed #ff9fba;
+}
+
+.preview-title{
+  color:#ff477e;
+  font-weight:bold;
+  font-size:13px;
+  margin-bottom:12px;
+}
+
+.preview-question{
+  font-size:21px;
+  font-weight:bold;
+  line-height:1.4;
+  text-align:center;
+}
+
+.preview-message{
+  margin-top:12px;
+  text-align:center;
+  color:#666;
+  line-height:1.5;
+  font-size:14px;
+}
+
+.from{
+  margin-top:15px;
+  text-align:right;
+  font-size:13px;
+  color:#888;
+}
+
+.footer{
+  text-align:center;
+  margin:20px 0;
+  font-size:12px;
+  color:#999;
+}
+
+.hidden{
+  display:none;
+}
+
+@media(max-width:420px){
+  body{
+    padding:12px;
+  }
+
+  .card{
+    padding:20px 17px;
+  }
+
+  h1{
+    font-size:24px;
+  }
+}
+</style>
 </head>
 
 <body>
 
+<div class="container">
+
+  <div class="header">
+    <div class="logo">LovePage ❤️</div>
+    <div class="subtitle">
+      Create something special for someone special.
+    </div>
+  </div>
+
   <div class="card">
 
-    <div class="heart">❤️</div>
+    <div class="heart">💌</div>
 
-    <h1 id="title">Couple Surprise</h1>
+    <h1>Create Your Love Page</h1>
 
-    <div id="creator">
+    <p class="description">
+      Make a cute personalized page and share it with your special person.
+    </p>
 
-      <p>
-        Create a cute surprise link for your special person 💕
-      </p>
+    <label for="sender">Your Name</label>
+    <input
+      id="sender"
+      type="text"
+      placeholder="Enter your name"
+    >
 
+    <label for="partner">Partner's Name</label>
+    <input
+      id="partner"
+      type="text"
+      placeholder="Enter their name"
+    >
+
+    <label for="question">Your Question</label>
+    <select id="question">
+      <option value="Will you be mine forever?">
+        Will you be mine forever?
+      </option>
+
+      <option value="Will you be my Valentine?">
+        Will you be my Valentine?
+      </option>
+
+      <option value="Do you love me?">
+        Do you love me?
+      </option>
+
+      <option value="Will you stay with me forever?">
+        Will you stay with me forever?
+      </option>
+
+      <option value="custom">
+        Write my own question
+      </option>
+    </select>
+
+    <div id="customQuestionBox" class="hidden">
+      <label for="customQuestion">Custom Question</label>
       <input
-        id="name"
+        id="customQuestion"
         type="text"
-        placeholder="Your partner's name"
+        placeholder="Write your question..."
       >
+    </div>
 
-      <textarea
-        id="message"
-        placeholder="Write your special message..."
-      ></textarea>
+    <label for="message">Personal Message</label>
 
-      <button onclick="createLink()">
-        Create My Surprise ❤️
-      </button>
+    <textarea
+      id="message"
+      placeholder="Write something from your heart..."
+    ></textarea>
 
-      <div id="result">
-        <p><b>Your surprise link is ready! 🎉</b></p>
+    <div class="preview">
 
-        <input id="generatedLink" readonly>
+      <div class="preview-title">
+        LIVE PREVIEW ❤️
+      </div>
 
-        <button onclick="copyLink()">
-          Copy Link
-        </button>
+      <div class="preview-question" id="previewQuestion">
+        Will you be mine forever?
+      </div>
+
+      <div class="preview-message" id="previewMessage">
+        Your personal message will appear here...
+      </div>
+
+      <div class="from" id="previewFrom">
+        — From someone special 💕
       </div>
 
     </div>
 
-    <div id="surprise" style="display:none;">
-
-      <h1 id="partnerName"></h1>
-
-      <p id="partnerMessage"></p>
-
-      <div style="font-size:45px; margin-top:20px;">
-        💕 🥰 💕
-      </div>
-
-      <p class="small">
-        Made with ❤️
-      </p>
-
-    </div>
+    <button class="btn" onclick="continuePage()">
+      Continue ❤️
+    </button>
 
   </div>
 
+  <div class="footer">
+    Made with ❤️ for special moments
+  </div>
+
+</div>
+
 <script>
 
-function encodeData(data) {
-  return btoa(
-    encodeURIComponent(JSON.stringify(data))
-  );
+const sender = document.getElementById("sender");
+const partner = document.getElementById("partner");
+const question = document.getElementById("question");
+const customQuestion = document.getElementById("customQuestion");
+const customQuestionBox = document.getElementById("customQuestionBox");
+const message = document.getElementById("message");
+
+const previewQuestion =
+document.getElementById("previewQuestion");
+
+const previewMessage =
+document.getElementById("previewMessage");
+
+const previewFrom =
+document.getElementById("previewFrom");
+
+question.addEventListener("change", function(){
+
+  if(this.value === "custom"){
+    customQuestionBox.classList.remove("hidden");
+  }else{
+    customQuestionBox.classList.add("hidden");
+    updatePreview();
+  }
+
+});
+
+function updatePreview(){
+
+  let selectedQuestion = question.value;
+
+  if(selectedQuestion === "custom"){
+    selectedQuestion =
+      customQuestion.value ||
+      "Your question will appear here...";
+  }
+
+  const partnerName =
+    partner.value || "Your special person";
+
+  previewQuestion.innerText =
+    selectedQuestion.replace(
+      /\?$/,
+      ""
+    ) + ", " + partnerName + "?";
+
+  previewMessage.innerText =
+    message.value ||
+    "Your personal message will appear here...";
+
+  previewFrom.innerText =
+    sender.value
+      ? "— From " + sender.value + " 💕"
+      : "— From someone special 💕";
 }
 
-function decodeData(data) {
-  return JSON.parse(
-    decodeURIComponent(atob(data))
-  );
-}
+sender.addEventListener("input",updatePreview);
+partner.addEventListener("input",updatePreview);
+question.addEventListener("change",updatePreview);
+customQuestion.addEventListener("input",updatePreview);
+message.addEventListener("input",updatePreview);
 
-function createLink() {
+function continuePage(){
 
-  const name = document.getElementById("name").value.trim();
-  const message = document.getElementById("message").value.trim();
+  const senderName = sender.value.trim();
+  const partnerName = partner.value.trim();
+  const personalMessage = message.value.trim();
 
-  if (!name || !message) {
-    alert("Please enter name and message ❤️");
+  let selectedQuestion = question.value;
+
+  if(question.value === "custom"){
+    selectedQuestion =
+      customQuestion.value.trim();
+  }
+
+  if(!senderName){
+    alert("Please enter your name ❤️");
+    sender.focus();
     return;
   }
 
-  const data = {
-    n: name,
-    m: message
-  };
-
-  const encoded = encodeData(data);
-
-  const link =
-    window.location.origin +
-    window.location.pathname +
-    "?d=" +
-    encodeURIComponent(encoded);
-
-  document.getElementById("generatedLink").value = link;
-
-  document.getElementById("result").style.display = "block";
-}
-
-function copyLink() {
-
-  const input = document.getElementById("generatedLink");
-
-  navigator.clipboard.writeText(input.value);
-
-  alert("Link copied! ❤️");
-}
-
-function loadSurprise() {
-
-  const params = new URLSearchParams(window.location.search);
-  const data = params.get("d");
-
-  if (!data) return;
-
-  try {
-
-    const decoded = decodeData(data);
-
-    document.getElementById("creator").style.display = "none";
-    document.getElementById("surprise").style.display = "block";
-
-    document.getElementById("partnerName").innerText =
-      "Hey " + decoded.n + " ❤️";
-
-    document.getElementById("partnerMessage").innerText =
-      decoded.m;
-
-  } catch (error) {
-
-    console.log("Invalid link");
-
+  if(!partnerName){
+    alert("Please enter your partner's name ❤️");
+    partner.focus();
+    return;
   }
+
+  if(!selectedQuestion){
+    alert("Please enter your question ❤️");
+    return;
+  }
+
+  if(!personalMessage){
+    alert("Please write a personal message ❤️");
+    message.focus();
+    return;
+  }
+
+  /*
+    For now we only show a preview confirmation.
+    In the next step this data will be sent to
+    the YES/NO surprise page.
+  */
+
+  alert(
+    "Perfect! ❤️\n\n" +
+    "Your Love Page is ready for the next step."
+  );
 }
 
-loadSurprise();
+updatePreview();
 
 </script>
 
