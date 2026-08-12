@@ -584,6 +584,38 @@ select:focus{
     pointer-events:none;
   }
 
+  /* Floating love emojis - bottom to top on the YES/NO screen */
+  .love-floating-hearts{
+    position:absolute;
+    inset:0;
+    z-index:1;
+    overflow:hidden;
+    pointer-events:none;
+  }
+
+  .love-float-heart{
+    position:absolute;
+    left:0;
+    bottom:-70px;
+    opacity:0;
+    user-select:none;
+    filter:drop-shadow(0 5px 10px rgba(255,70,140,.22));
+    animation:loveFloatUp linear forwards;
+  }
+
+  @keyframes loveFloatUp{
+    0%{
+      transform:translate3d(0,0,0) rotate(0deg) scale(.65);
+      opacity:0;
+    }
+    12%{opacity:.9;}
+    55%{opacity:.72;}
+    100%{
+      transform:translate3d(var(--drift),-115vh,0) rotate(var(--rotate)) scale(1.15);
+      opacity:0;
+    }
+  }
+
   @keyframes loveBg{
     0%{background-position:0% 30%;filter:hue-rotate(0deg)}
     50%{background-position:100% 70%;filter:hue-rotate(12deg)}
@@ -995,6 +1027,8 @@ select:focus{
 </div>
 <!-- LOVE QUESTION SCREEN -->
 <div id="loveScreen" class="love-screen hidden">
+
+  <div id="loveFloatingHearts" class="love-floating-hearts" aria-hidden="true"></div>
 
   <button id="musicToggle" class="music-toggle" type="button" onclick="toggleMusic()">
     🔊 Music ON
@@ -1421,24 +1455,33 @@ let heartInterval = null;
 function startFloatingHearts() {
     stopFloatingHearts();
 
+    const layer = document.getElementById("loveFloatingHearts");
+    if (!layer) return;
+
+    // A few hearts are created immediately so the animation is visible at once.
+    for (let i = 0; i < 8; i++) createLoveFloatingHeart(layer, true);
+
     heartInterval = setInterval(function () {
-        const heart = document.createElement("div");
-        const hearts = ["❤️", "💕", "💗", "💖", "💘", "✨", "🌸"];
+        createLoveFloatingHeart(layer, false);
+    }, 420);
+}
 
-        heart.className = "floating-heart";
-        heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
-        heart.style.position = "fixed";
-        heart.style.left = Math.random() * 100 + "vw";
-        heart.style.bottom = "-40px";
-        heart.style.zIndex = "1";
-        heart.style.fontSize = (14 + Math.random() * 22) + "px";
-        heart.style.opacity = "0";
-        heart.style.pointerEvents = "none";
-        heart.style.animation = `floatHeart ${5 + Math.random() * 5}s linear forwards`;
-        document.body.appendChild(heart);
+function createLoveFloatingHeart(layer, initial = false) {
+    const heart = document.createElement("span");
+    const emojis = ["💕", "💖", "💗", "❤️", "💘", "✨", "💝", "🌸"];
+    const duration = 5.5 + Math.random() * 5.5;
 
-        setTimeout(() => heart.remove(), 11000);
-    }, 520);
+    heart.className = "love-float-heart";
+    heart.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+    heart.style.left = (Math.random() * 100) + "%";
+    heart.style.fontSize = (15 + Math.random() * 24) + "px";
+    heart.style.setProperty("--drift", ((Math.random() * 180) - 90) + "px");
+    heart.style.setProperty("--rotate", ((Math.random() * 50) - 25) + "deg");
+    heart.style.animationDuration = duration + "s";
+    heart.style.animationDelay = initial ? (-Math.random() * duration) + "s" : "0s";
+
+    layer.appendChild(heart);
+    setTimeout(() => heart.remove(), (duration + 1) * 1000);
 }
 
 function stopFloatingHearts() {
