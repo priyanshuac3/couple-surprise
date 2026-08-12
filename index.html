@@ -1668,135 +1668,75 @@ function resetLoveScreen() {
     if (yesButton) yesButton.style.transform = "";
 }
 
+
 // ===============================
-// PREMIUM MUSIC INTRO
+// PREMIUM MUSIC INTRO — FINAL SAFE VERSION
 // ===============================
+const musicIntro = document.getElementById("musicIntro");
+const enterLoveBtn = document.getElementById("enterLoveBtn");
 
-const musicIntro =
-    document.getElementById("musicIntro");
-
-const enterLoveBtn =
-    document.getElementById("enterLoveBtn");
-
-const bgMusic =
-    document.getElementById("bgMusic");
-
-const musicToggle =
-    document.getElementById("musicToggle");
-
-
-// Hide intro immediately
 function hideMusicIntro() {
-
-    if (!musicIntro) return;
-
-    musicIntro.classList.add("hide");
-
+    if (musicIntro) {
+        musicIntro.classList.add("hide");
+    }
 }
 
-
-// Start music
 function startIntroMusic() {
-
     if (!bgMusic) return;
 
     bgMusic.volume = 0.45;
 
-    const playPromise =
-        bgMusic.play();
+    const promise = bgMusic.play();
 
-    if (playPromise !== undefined) {
-
-        playPromise
-            .then(function () {
-
-                if (musicToggle) {
-                    musicToggle.textContent =
-                        "🔊 Music ON";
-                }
-
-            })
-            .catch(function () {
-
-                if (musicToggle) {
-                    musicToggle.textContent =
-                        "🔇 Tap for music";
-                }
-
-            });
-
+    if (promise && typeof promise.catch === "function") {
+        promise.then(function () {
+            if (musicToggle) musicToggle.textContent = "🔊 Music ON";
+        }).catch(function () {
+            if (musicToggle) musicToggle.textContent = "🔇 Music OFF";
+        });
     }
-
 }
 
-
-// Enter LovePage
 function enterLovePage() {
-
-    // IMPORTANT:
-    // Hide intro FIRST.
-    // Don't wait for music.
-
+    // IMPORTANT: reveal the actual page immediately.
+    // Never wait for audio to resolve.
     hideMusicIntro();
 
-
-    // Start music after user's tap
+    // The click itself is a valid user gesture for mobile audio.
     startIntroMusic();
 
-
-    // Start background hearts
+    // Keep the existing floating-heart effect running.
     if (typeof startFloatingHearts === "function") {
         startFloatingHearts();
     }
-
 }
 
+// Make it available to inline HTML handlers too.
+window.enterLovePage = enterLovePage;
 
-// Make function globally available
-window.enterLovePage =
-    enterLovePage;
-
-
-// Button click
 if (enterLoveBtn) {
-
-    enterLoveBtn.addEventListener(
-        "click",
-        enterLovePage
-    );
-
+    enterLoveBtn.addEventListener("click", enterLovePage);
 }
 
+// Try autoplay where the browser permits it.
+// If blocked, the intro stays until the user taps Enter.
+window.addEventListener("load", function () {
+    if (!bgMusic) return;
 
-// Try autoplay when possible
-window.addEventListener(
-    "load",
-    function () {
+    bgMusic.volume = 0.45;
 
-        if (!bgMusic) return;
+    const promise = bgMusic.play();
 
-        bgMusic.volume = 0.45;
-
-        bgMusic.play()
-            .then(function () {
-
-                hideMusicIntro();
-
-                if (musicToggle) {
-                    musicToggle.textContent =
-                        "🔊 Music ON";
-                }
-
-            })
-            .catch(function () {
-
-                // Mobile browsers may block autoplay.
-                // User can tap Enter.
-
-            });
-
+    if (promise && typeof promise.then === "function") {
+        promise.then(function () {
+            hideMusicIntro();
+            if (musicToggle) musicToggle.textContent = "🔊 Music ON";
+        }).catch(function () {
+            // Normal on many mobile browsers.
+            // User tap will start the music.
+        });
     }
-);
+});
 
 // ===============================
 // INITIAL PREVIEW
