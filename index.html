@@ -848,10 +848,112 @@ select:focus{
   .floating-heart{position:fixed;bottom:-40px;z-index:1;pointer-events:none;opacity:0}
   @keyframes floatHeart{0%{transform:translateY(0) rotate(0) scale(.7);opacity:0}15%{opacity:.8}80%{opacity:.7}100%{transform:translateY(-110vh) rotate(360deg) scale(1.25);opacity:0}}
 
+
+
+/* ===============================
+   PREMIUM MUSIC INTRO / TAP TO ENTER
+   =============================== */
+.music-intro{
+  position:fixed;
+  inset:0;
+  z-index:5000;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:22px;
+  background:
+    radial-gradient(circle at 20% 20%,rgba(255,110,170,.45),transparent 32%),
+    radial-gradient(circle at 80% 75%,rgba(135,95,255,.32),transparent 34%),
+    linear-gradient(135deg,#180b20,#3d1230 48%,#11152f);
+  overflow:hidden;
+  transition:opacity .75s ease, visibility .75s ease;
+}
+.music-intro.hide{
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+}
+.music-intro::before,
+.music-intro::after{
+  content:"";
+  position:absolute;
+  width:280px;height:280px;
+  border-radius:50%;
+  filter:blur(70px);
+  opacity:.35;
+  animation:introGlow 7s ease-in-out infinite alternate;
+}
+.music-intro::before{background:#ff4f9a;left:-100px;top:15%;}
+.music-intro::after{background:#7b61ff;right:-100px;bottom:5%;animation-delay:-3s;}
+@keyframes introGlow{to{transform:translate(45px,-35px) scale(1.25)}}
+.music-intro-card{
+  position:relative;
+  z-index:2;
+  width:min(430px,100%);
+  padding:42px 26px 30px;
+  text-align:center;
+  border-radius:32px;
+  background:rgba(255,255,255,.11);
+  border:1px solid rgba(255,255,255,.22);
+  box-shadow:0 30px 100px rgba(0,0,0,.28),inset 0 1px rgba(255,255,255,.18);
+  backdrop-filter:blur(22px);
+  -webkit-backdrop-filter:blur(22px);
+  animation:introCard .9s cubic-bezier(.2,.8,.2,1) both;
+}
+@keyframes introCard{from{opacity:0;transform:translateY(30px) scale(.94)}to{opacity:1;transform:none}}
+.intro-heart{
+  font-size:70px;
+  line-height:1;
+  filter:drop-shadow(0 12px 25px rgba(255,80,150,.4));
+  animation:introBeat 1.45s infinite;
+}
+@keyframes introBeat{0%,100%{transform:scale(1)}15%{transform:scale(1.14)}30%{transform:scale(1)}45%{transform:scale(1.08)}}
+.music-intro h2{
+  margin:20px 0 8px;
+  color:#fff;
+  font-family:'Playfair Display',serif;
+  font-size:31px;
+}
+.music-intro p{
+  color:rgba(255,255,255,.76);
+  font-size:14px;
+  line-height:1.65;
+  margin:0 auto 24px;
+}
+.enter-btn{
+  width:100%;
+  border:0;
+  border-radius:17px;
+  padding:16px 20px;
+  color:#fff;
+  font:700 16px 'DM Sans',sans-serif;
+  background:linear-gradient(135deg,#ff477e,#ff73a6,#9b6cff);
+  background-size:200% 200%;
+  box-shadow:0 14px 35px rgba(255,71,126,.3);
+  cursor:pointer;
+  animation:gradientMove 4s ease infinite, enterPulse 2s ease-in-out infinite;
+}
+@keyframes enterPulse{0%,100%{box-shadow:0 14px 35px rgba(255,71,126,.28)}50%{box-shadow:0 18px 45px rgba(255,71,126,.5)}}
+.intro-note{margin-top:14px!important;margin-bottom:0!important;font-size:11px!important;color:rgba(255,255,255,.55)!important}
+.intro-mini-hearts{margin-top:15px;color:rgba(255,190,220,.8);letter-spacing:7px;font-size:14px;}
+
 </style>
 </head>
 
 <body>
+
+<!-- PREMIUM MUSIC INTRO -->
+<div id="musicIntro" class="music-intro">
+  <div class="music-intro-card">
+    <div class="intro-heart">💗</div>
+    <div class="intro-mini-hearts">♡ ✨ ♡ ✨ ♡</div>
+    <h2>A Little Surprise Awaits...</h2>
+    <p>Put your volume on and tap below to enter your special love page. ❤️</p>
+    <button id="enterLoveBtn" class="enter-btn" type="button">Tap to Enter &amp; Play Music ❤️</button>
+    <p class="intro-note">🎵 Music will continue throughout your LovePage</p>
+  </div>
+</div>
+
 
 <!-- Animated background -->
 
@@ -1565,6 +1667,47 @@ function resetLoveScreen() {
 
     if (yesButton) yesButton.style.transform = "";
 }
+
+
+// ===============================
+// PREMIUM MUSIC INTRO
+// ===============================
+const musicIntro = document.getElementById("musicIntro");
+const enterLoveBtn = document.getElementById("enterLoveBtn");
+
+function hideMusicIntro() {
+    if (musicIntro) musicIntro.classList.add("hide");
+}
+
+async function enterLovePage() {
+    if (bgMusic) {
+        bgMusic.volume = 0.45;
+        try {
+            await bgMusic.play();
+            if (musicToggle) musicToggle.textContent = "🔊 Music ON";
+        } catch (e) {
+            if (musicToggle) musicToggle.textContent = "🔇 Tap for music";
+        }
+    }
+    hideMusicIntro();
+}
+
+if (enterLoveBtn) {
+    enterLoveBtn.addEventListener("click", enterLovePage);
+}
+
+// Try autoplay on supported browsers. If mobile blocks it,
+// the Tap to Enter screen remains and the user's tap starts audio.
+window.addEventListener("load", function () {
+    if (!bgMusic) return;
+    bgMusic.volume = 0.45;
+    bgMusic.play().then(function () {
+        hideMusicIntro();
+        if (musicToggle) musicToggle.textContent = "🔊 Music ON";
+    }).catch(function () {
+        // Expected on many mobile browsers: wait for the tap.
+    });
+});
 
 // ===============================
 // INITIAL PREVIEW
