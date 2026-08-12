@@ -885,6 +885,97 @@ select:focus{
   }
 
 }
+  /* ===== PREMIUM LOVE SCREEN ===== */
+
+#loveScreen {
+    overflow: hidden;
+    position: relative;
+}
+
+#loveScreen::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(circle at 20% 20%, rgba(255, 105, 180, 0.16), transparent 30%),
+        radial-gradient(circle at 80% 80%, rgba(255, 0, 100, 0.12), transparent 30%);
+    pointer-events: none;
+}
+
+#loveScreen .heart,
+#loveScreen .floating-heart {
+    pointer-events: none;
+}
+
+#loveScreen button {
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        background 0.25s ease;
+}
+
+#loveScreen button:first-of-type {
+    animation: yesPulse 2s infinite;
+}
+
+#loveScreen button:first-of-type:hover {
+    transform: scale(1.06);
+    box-shadow: 0 10px 30px rgba(255, 80, 140, 0.35);
+}
+
+@keyframes yesPulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.035);
+    }
+}
+
+.floating-heart {
+    position: fixed;
+    bottom: -40px;
+    z-index: 999;
+    font-size: 18px;
+    opacity: 0;
+    animation: floatHeart linear forwards;
+    pointer-events: none;
+}
+
+@keyframes floatHeart {
+    0% {
+        transform: translateY(0) rotate(0deg) scale(0.7);
+        opacity: 0;
+    }
+
+    15% {
+        opacity: 0.8;
+    }
+
+    80% {
+        opacity: 0.7;
+    }
+
+    100% {
+        transform:
+            translateY(-110vh)
+            rotate(360deg)
+            scale(1.25);
+        opacity: 0;
+    }
+}
+
+@media (max-width: 600px) {
+
+    #loveScreen {
+        padding: 20px;
+    }
+
+    #loveScreen button {
+        min-height: 48px;
+    }
+}
 </style>
 </head>
 
@@ -1460,7 +1551,111 @@ function createConfetti() {
 // ===============================
 
 updatePreview();
+// ===============================
+// PREMIUM FLOATING HEARTS
+// ===============================
 
+let heartInterval = null;
+
+function startFloatingHearts() {
+
+    if (heartInterval) {
+        clearInterval(heartInterval);
+    }
+
+    heartInterval = setInterval(function () {
+
+        const heart = document.createElement("div");
+
+        const hearts = [
+            "❤️",
+            "💕",
+            "💗",
+            "💖",
+            "💘",
+            "✨"
+        ];
+
+        heart.className = "floating-heart";
+
+        heart.textContent =
+            hearts[
+                Math.floor(Math.random() * hearts.length)
+            ];
+
+        heart.style.left =
+            Math.random() * 100 + "vw";
+
+        heart.style.fontSize =
+            (14 + Math.random() * 22) + "px";
+
+        heart.style.animationDuration =
+            (5 + Math.random() * 5) + "s";
+
+        document.body.appendChild(heart);
+
+        setTimeout(function () {
+            heart.remove();
+        }, 11000);
+
+    }, 650);
+}
+
+
+// ===============================
+// STOP FLOATING HEARTS
+// ===============================
+
+function stopFloatingHearts() {
+
+    if (heartInterval) {
+        clearInterval(heartInterval);
+        heartInterval = null;
+    }
+}
+
+
+// ===============================
+// START WHEN LOVE SCREEN OPENS
+// ===============================
+
+const originalContinuePage = continuePage;
+
+continuePage = function () {
+
+    originalContinuePage();
+
+    setTimeout(function () {
+
+        const loveScreen =
+            document.getElementById("loveScreen");
+
+        if (
+            loveScreen &&
+            !loveScreen.classList.contains("hidden")
+        ) {
+            startFloatingHearts();
+        }
+
+    }, 100);
+
+};
+
+
+// ===============================
+// STOP AFTER YES
+// ===============================
+
+const originalSayYes = sayYes;
+
+sayYes = function () {
+
+    originalSayYes();
+
+    stopFloatingHearts();
+
+};
+  
 </script>
 
 
