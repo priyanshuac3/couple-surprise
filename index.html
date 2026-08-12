@@ -1668,46 +1668,135 @@ function resetLoveScreen() {
     if (yesButton) yesButton.style.transform = "";
 }
 
-
 // ===============================
 // PREMIUM MUSIC INTRO
 // ===============================
-const musicIntro = document.getElementById("musicIntro");
-const enterLoveBtn = document.getElementById("enterLoveBtn");
 
+const musicIntro =
+    document.getElementById("musicIntro");
+
+const enterLoveBtn =
+    document.getElementById("enterLoveBtn");
+
+const bgMusic =
+    document.getElementById("bgMusic");
+
+const musicToggle =
+    document.getElementById("musicToggle");
+
+
+// Hide intro immediately
 function hideMusicIntro() {
-    if (musicIntro) musicIntro.classList.add("hide");
+
+    if (!musicIntro) return;
+
+    musicIntro.classList.add("hide");
+
 }
 
-async function enterLovePage() {
-    if (bgMusic) {
-        bgMusic.volume = 0.45;
-        try {
-            await bgMusic.play();
-            if (musicToggle) musicToggle.textContent = "🔊 Music ON";
-        } catch (e) {
-            if (musicToggle) musicToggle.textContent = "🔇 Tap for music";
-        }
-    }
-    hideMusicIntro();
-}
 
-if (enterLoveBtn) {
-    enterLoveBtn.addEventListener("click", enterLovePage);
-}
+// Start music
+function startIntroMusic() {
 
-// Try autoplay on supported browsers. If mobile blocks it,
-// the Tap to Enter screen remains and the user's tap starts audio.
-window.addEventListener("load", function () {
     if (!bgMusic) return;
+
     bgMusic.volume = 0.45;
-    bgMusic.play().then(function () {
-        hideMusicIntro();
-        if (musicToggle) musicToggle.textContent = "🔊 Music ON";
-    }).catch(function () {
-        // Expected on many mobile browsers: wait for the tap.
-    });
-});
+
+    const playPromise =
+        bgMusic.play();
+
+    if (playPromise !== undefined) {
+
+        playPromise
+            .then(function () {
+
+                if (musicToggle) {
+                    musicToggle.textContent =
+                        "🔊 Music ON";
+                }
+
+            })
+            .catch(function () {
+
+                if (musicToggle) {
+                    musicToggle.textContent =
+                        "🔇 Tap for music";
+                }
+
+            });
+
+    }
+
+}
+
+
+// Enter LovePage
+function enterLovePage() {
+
+    // IMPORTANT:
+    // Hide intro FIRST.
+    // Don't wait for music.
+
+    hideMusicIntro();
+
+
+    // Start music after user's tap
+    startIntroMusic();
+
+
+    // Start background hearts
+    if (typeof startFloatingHearts === "function") {
+        startFloatingHearts();
+    }
+
+}
+
+
+// Make function globally available
+window.enterLovePage =
+    enterLovePage;
+
+
+// Button click
+if (enterLoveBtn) {
+
+    enterLoveBtn.addEventListener(
+        "click",
+        enterLovePage
+    );
+
+}
+
+
+// Try autoplay when possible
+window.addEventListener(
+    "load",
+    function () {
+
+        if (!bgMusic) return;
+
+        bgMusic.volume = 0.45;
+
+        bgMusic.play()
+            .then(function () {
+
+                hideMusicIntro();
+
+                if (musicToggle) {
+                    musicToggle.textContent =
+                        "🔊 Music ON";
+                }
+
+            })
+            .catch(function () {
+
+                // Mobile browsers may block autoplay.
+                // User can tap Enter.
+
+            });
+
+    }
+);
 
 // ===============================
 // INITIAL PREVIEW
