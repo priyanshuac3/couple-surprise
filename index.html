@@ -1067,7 +1067,12 @@ background: transparent;
 #backBtn:active{
     transform:scale(.96);
 }
-   
+.video-card video{
+    width:100%;
+    display:block;
+    pointer-events:none;
+}
+  
 </style>
 </head>
 
@@ -1324,9 +1329,16 @@ background: transparent;
 I love you endlessly 💕 
     </h5>
 <div class="video-card">
-    <video autoplay muted loop playsinline controls>
-        <source src="video.mp4" type="video/mp4">
-    </video>
+   <video
+    autoplay
+    muted
+    loop
+    playsinline
+    disablePictureInPicture
+    controlsList="nodownload noplaybackrate nofullscreen"
+>
+    <source src="video.mp4" type="video/mp4">
+</video>
 </div>
     
     <p id="successMessage">
