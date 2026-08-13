@@ -1924,25 +1924,21 @@ updatePreview();
         heart.remove();
     }, 8000);
 }
+function goBack(){
 
-  function goBack(){
-
-    // Success page hide
     document.getElementById("successScreen")
         .classList.add("hidden");
 
-    // Love question page hide
     document.getElementById("loveScreen")
         .classList.add("hidden");
 
-    // Main form page bhi hide rahe
-    document.querySelector(".container")
-        .style.display = "none";
-
-    // Intro page show
     document.getElementById("musicIntro")
-        .classList.remove("hide");
+        .classList.add("hide");
+
+    document.querySelector(".container")
+        .style.display = "block";
 }
+
 </script>
 
 
