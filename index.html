@@ -691,17 +691,43 @@ background: transparent;
     font-size:13px;
   }
 
-  .no-message{
-    min-height:28px;
-    margin-top:12px;
-    color:#ff4f87;
-    font-weight:700;
-    font-size:14px;
-    opacity:0;
-    transform:translateY(6px);
-    transition:.3s ease;
-  }
+.no-message{
+    min-height: 28px;
+    margin: 20px auto 0;
+    padding: 16px 24px;
+    width: min(85%, 560px);
 
+    border: 1px solid rgba(255,255,255,0.35);
+    border-radius: 40px;
+
+    background: rgba(255,255,255,0.12);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+
+    box-shadow:
+        0 8px 30px rgba(0,0,0,0.08),
+        inset 0 1px 1px rgba(255,255,255,0.25);
+
+    color: rgba(255,255,255,0.95);
+
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-style: italic;
+    line-height: 1.35;
+
+    text-align: center;
+
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.35s ease;
+
+    pointer-events: none;
+}
+
+.no-message.show{
+    opacity: 1;
+    transform: translateY(0);
+}
   .no-message.show{
     opacity:1;
     transform:translateY(0);
@@ -1279,19 +1305,21 @@ background: transparent;
 
     <h2 id="loveQuestion">Will you be mine forever?</h2>
 
-    <p id="loveFrom">From someone special 💕</p>
+   <p id="loveFrom">From someone special 💕</p>
 
-    <div id="noMessage" class="no-message" aria-live="polite"></div>
+<div class="love-buttons" id="loveButtons">
 
-    <div class="love-buttons" id="loveButtons">
-      <button id="yesBtn" class="yes-btn" type="button" onclick="sayYes()">
-        YES ❤️
-      </button>
+  <button id="yesBtn" class="yes-btn" type="button" onclick="sayYes()">
+    YES ❤️
+  </button>
 
-      <button id="noBtn" class="no-btn" type="button" onclick="moveNoButton()">
-        NO 😏
-      </button>
-    </div>
+  <button id="noBtn" class="no-btn" type="button" onclick="moveNoButton()">
+    NO 😏
+  </button>
+
+</div>
+
+<div id="noMessage" class="no-message" aria-live="polite"></div>
   </div>
 
 <audio id="bgMusic" autoplay loop>
