@@ -997,6 +997,11 @@ background: transparent;
 .success-card p{
     text-align:center !important;
 }
+  
+.love-question{
+  color: white;
+}
+  
 </style>
 </head>
 
@@ -1204,7 +1209,7 @@ background: transparent;
 
     <h2 id="loveQuestion">Will you be mine forever?</h2>
 
-    <p id="loveFrom">From: someone special  💌</p>
+    <p id="loveFrom">From someone special 💕</p>
 
     <div id="noMessage" class="no-message" aria-live="polite"></div>
 
@@ -1302,7 +1307,7 @@ function updatePreview() {
 
     previewFrom.textContent =
         sender.value.trim()
-            ? "— From " + sender.value.trim() + " 💕"
+            ? "— From: " + sender.value.trim() + " 💌"
             : "— From someone special 💕";
 }
 
