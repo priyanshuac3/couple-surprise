@@ -1437,7 +1437,10 @@ function continuePage() {
     let selectedQuestion =
         question.value;
 
+document.getElementById("backBtn").style.display = "block";
+  loveScreen.classList.remove("hidden");
 
+document.getElementById("backBtn").style.display = "block";
     // Custom question
     if (question.value === "custom") {
 
@@ -1937,6 +1940,7 @@ function goBack(){
 
     document.querySelector(".container")
         .style.display = "block";
+  document.getElementById("backBtn").style.display ="none";
 }
 
 </script>
