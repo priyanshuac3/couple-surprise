@@ -1023,13 +1023,31 @@ background: transparent;
     }
 
 }
- .success-screen p{
-    color: white !important;
+  #backBtn{
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    z-index: 9999;
+
+    padding: 10px 16px;
+    border: none;
+    border-radius: 25px;
+
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(10px);
+
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
 }
 </style>
 </head>
 
 <body>
+
+<button id="backBtn" onclick="goBack()">
+    ⬅ Back
+</button>
 
 <!-- PREMIUM MUSIC INTRO -->
 <div id="musicIntro" class="music-intro">
@@ -1871,6 +1889,34 @@ updatePreview();
     setTimeout(() => {
         heart.remove();
     }, 8000);
+}
+
+  function goBack(){
+
+    if(
+        document.getElementById("successScreen")
+        &&
+        document.getElementById("successScreen").style.display !== "none"
+    ){
+
+        document.getElementById("successScreen").style.display = "none";
+
+        document.getElementById("questionPage").style.display = "flex";
+
+        return;
+    }
+
+    if(
+        document.getElementById("questionPage")
+        &&
+        document.getElementById("questionPage").style.display !== "none"
+    ){
+
+        document.getElementById("questionPage").style.display = "none";
+
+        document.getElementById("musicIntro").style.display = "flex";
+    }
+
 }
 </script>
 
