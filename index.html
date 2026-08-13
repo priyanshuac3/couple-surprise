@@ -789,21 +789,8 @@ background: transparent;
       linear-gradient(135deg,#ff4f87,#ff8fab,#9b5de5,#5b8def);
     background-size:180% 180%;
     animation:loveBg 10s ease-in-out infinite alternate;
-    .success-screen{
-    min-height:100vh;
-    background: linear-gradient(
-        -45deg,
-        #ff4d6d,
-        #ff758f,
-        #ffb347,
-        #ffd166,
-        #ff5e78
-    );
-    background-size:400% 400%;
-    animation: gradientMove 12s ease infinite;
-}
   }
-
+  
   .success-heart{
     font-size:80px;
     animation:bigHeartBeat 1.15s infinite;
@@ -963,41 +950,6 @@ background: transparent;
     animation: glow 2s infinite alternate;
 }
 
-@keyframes glow{
-    from{
-        text-shadow:0 0 10px pink;
-    }
-    to{
-        text-shadow:0 0 25px hotpink;
-    }
-}
-
-  @keyframes gradientMove{
-    0%{
-        background-position:0% 50%;
-    }
-    50%{
-        background-position:100% 50%;
-    }
-    100%{
-        background-position:0% 50%;
-    }
-}
-  @keyframes floatUp{
-    0%{
-        transform:translateY(0);
-        opacity:0;
-    }
-
-    20%{
-        opacity:1;
-    }
-
-    100%{
-        transform:translateY(-120vh);
-        opacity:0;
-    }
-}
 </style>
 </head>
 
@@ -1252,7 +1204,6 @@ I love you endlessly 💕
         <source src="video.mp4" type="video/mp4">
     </video>
 </div>
-<div id="successFloatingHearts"></div>
     
     <p id="successMessage">
       You just made someone very happy. ❤️
