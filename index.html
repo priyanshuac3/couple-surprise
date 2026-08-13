@@ -1811,34 +1811,7 @@ window.addEventListener("load", function () {
 // ===============================
 
 updatePreview();
-function createSuccessHeart() {
 
-    const heart = document.createElement("div");
-
-    const emojis = ["💖","💕","❤️","✨","🌸"];
-
-    heart.innerHTML =
-        emojis[Math.floor(Math.random()*emojis.length)];
-
-    heart.style.position = "fixed";
-    heart.style.left = Math.random()*100 + "vw";
-    heart.style.bottom = "-50px";
-    heart.style.fontSize =
-        (20 + Math.random()*20) + "px";
-
-    heart.style.zIndex = "999";
-
-    heart.style.animation =
-        "floatUp 6s linear forwards";
-
-    document.body.appendChild(heart);
-
-    setTimeout(() => {
-        heart.remove();
-    },6000);
-}
-
-setInterval(createSuccessHeart,500);
 </script>
 
 
