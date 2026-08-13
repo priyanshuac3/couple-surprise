@@ -789,6 +789,19 @@ background: transparent;
       linear-gradient(135deg,#ff4f87,#ff8fab,#9b5de5,#5b8def);
     background-size:180% 180%;
     animation:loveBg 10s ease-in-out infinite alternate;
+    .success-screen{
+    min-height:100vh;
+    background: linear-gradient(
+        -45deg,
+        #ff4d6d,
+        #ff758f,
+        #ffb347,
+        #ffd166,
+        #ff5e78
+    );
+    background-size:400% 400%;
+    animation: gradientMove 12s ease infinite;
+}
   }
 
   .success-heart{
@@ -958,7 +971,33 @@ background: transparent;
         text-shadow:0 0 25px hotpink;
     }
 }
-  
+
+  @keyframes gradientMove{
+    0%{
+        background-position:0% 50%;
+    }
+    50%{
+        background-position:100% 50%;
+    }
+    100%{
+        background-position:0% 50%;
+    }
+}
+  @keyframes floatUp{
+    0%{
+        transform:translateY(0);
+        opacity:0;
+    }
+
+    20%{
+        opacity:1;
+    }
+
+    100%{
+        transform:translateY(-120vh);
+        opacity:0;
+    }
+}
 </style>
 </head>
 
@@ -1213,16 +1252,12 @@ I love you endlessly 💕
         <source src="video.mp4" type="video/mp4">
     </video>
 </div>
-
-<h2 class="forever-text">Forever & Always ✨</h2>
+<div id="successFloatingHearts"></div>
     
     <p id="successMessage">
       You just made someone very happy. ❤️
     </p>
 
-    <div class="success-hearts">
-      💕 ❤️ 💕 ❤️ 💕
-    </div>
 
   </div>
 
@@ -1776,7 +1811,34 @@ window.addEventListener("load", function () {
 // ===============================
 
 updatePreview();
+function createSuccessHeart() {
 
+    const heart = document.createElement("div");
+
+    const emojis = ["💖","💕","❤️","✨","🌸"];
+
+    heart.innerHTML =
+        emojis[Math.floor(Math.random()*emojis.length)];
+
+    heart.style.position = "fixed";
+    heart.style.left = Math.random()*100 + "vw";
+    heart.style.bottom = "-50px";
+    heart.style.fontSize =
+        (20 + Math.random()*20) + "px";
+
+    heart.style.zIndex = "999";
+
+    heart.style.animation =
+        "floatUp 6s linear forwards";
+
+    document.body.appendChild(heart);
+
+    setTimeout(() => {
+        heart.remove();
+    },6000);
+}
+
+setInterval(createSuccessHeart,500);
 </script>
 
 
