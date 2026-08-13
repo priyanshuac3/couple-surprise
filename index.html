@@ -674,15 +674,15 @@ background: transparent;
     animation:floatTiny 2.2s ease-in-out infinite;
   }
 
-  .love-card h2, 
-  .success-card h2{
+.love-card h2,
+.success-card h2{
     margin-top:12px;
     font-family:'Playfair Display',serif;
-    font-size:31px;
-    line-height:1.25;
+    font-size:24px;
+    line-height:1.3;
     color:#38212c;
-  }
-
+    white-space: nowrap;
+}
   #loveFrom{
     margin-top:8px;
     color:#FFFFFF;
@@ -1084,7 +1084,7 @@ background: transparent;
     <div class="intro-mini-hearts">♡ ✨ ♡ ✨ ♡</div>
     <h2>A Little Surprise Awaits...</h2>
     <p>Put your volume on and tap below to enter your special love page. ❤️</p>
-    <button id="enterLoveBtn" class="enter-btn" type="button">Tap to Enter &amp; Play Music ❤️</button>
+    <button id="enterLoveBtn" class="enter-btn" type="button">Tap to Enter ❤️</button>
     <p class="intro-note">🎵 Music will continue throughout your LovePage</p>
   </div>
 </div>
@@ -1515,11 +1515,11 @@ function continuePage() {
     // SET LOVE QUESTION
     // ===============================
 
-    document.getElementById("loveQuestion").textContent =
-        selectedQuestion.replace(/\?$/, "") +
-        ", " +
-        partnerName +
-        "?";
+ document.getElementById("loveQuestion").innerHTML =
+selectedQuestion.replace(/\?$/, "") +
+"?<br>" +
+partnerName +
+" 💖";
 
 
     // ===============================
