@@ -646,12 +646,13 @@ background: transparent;
     background:rgba(255,105,180,.18);
     filter:blur(4px);
     pointer-events:none;
+    margin-top: -80px;
   }
 
   .big-heart{
     position:relative;
     z-index:2;
-    font-size:78px;
+    font-size:58px;
     line-height:1;
     display:inline-block;
     filter:drop-shadow(0 14px 25px rgba(255,40,100,.28));
@@ -673,13 +674,6 @@ background: transparent;
     animation:floatTiny 2.2s ease-in-out infinite;
   }
 
-  .love-small{
-    margin-top:21px;
-    color:#ff0000;
-    font-size:13px;
-    letter-spacing:.7px;
-  }
-
   .love-card h2, 
   .success-card h2{
     margin-top:12px;
@@ -690,7 +684,7 @@ background: transparent;
   }
 
   #loveFrom{
-    margin-top:12px;
+    margin-top:8px;
     color:#FFFFFF;
     font-size:13px;
   }
@@ -718,7 +712,7 @@ background: transparent;
     align-items:center;
     justify-content:center;
     gap:14px;
-    margin-top:4px;
+    margin-top: -10px;
   }
 
   .yes-btn,
@@ -1002,6 +996,7 @@ background: transparent;
 #questionText,
 .question {
     color: white !important;
+  margin-top: 6px;
 }
 
   h2{
@@ -1279,8 +1274,6 @@ background: transparent;
   <div class="love-card">
     <div class="big-heart">❤️</div>
     <div class="tiny-hearts">♡ ♥ ♡</div>
-
-    <p class="love-small">A little question for you...</p>
 
     <h2 id="loveQuestion">Will you be mine forever?</h2>
 
@@ -1934,42 +1927,21 @@ updatePreview();
 
   function goBack(){
 
-    const loveScreen =
-        document.getElementById("loveScreen");
+    // Success page hide
+    document.getElementById("successScreen")
+        .classList.add("hidden");
 
-    const successScreen =
-        document.getElementById("successScreen");
+    // Love question page hide
+    document.getElementById("loveScreen")
+        .classList.add("hidden");
 
-    const container =
-        document.querySelector(".container");
+    // Main form page bhi hide rahe
+    document.querySelector(".container")
+        .style.display = "none";
 
-    const backBtn =
-        document.getElementById("backBtn");
-
-    if(
-        successScreen &&
-        !successScreen.classList.contains("hidden")
-    ){
-
-        successScreen.classList.add("hidden");
-        loveScreen.classList.remove("hidden");
-
-        return;
-    }
-
-    if(
-        loveScreen &&
-        !loveScreen.classList.contains("hidden")
-    ){
-
-        loveScreen.classList.add("hidden");
-
-        container.style.display = "block";
-
-        backBtn.style.display = "none";
-
-        return;
-    }
+    // Intro page show
+    document.getElementById("musicIntro")
+        .classList.remove("hide");
 }
 </script>
 
