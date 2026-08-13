@@ -1002,6 +1002,31 @@ background: transparent;
 #questionText,
 .question {
     color: white !important;
+  .question,
+#questionText{
+
+    font-size: 2rem; /* size thoda kam */
+
+    color: white;
+
+    animation: pulseZoom 2.5s ease-in-out infinite;
+}
+}
+
+  @keyframes pulseZoom{
+
+    0%{
+        transform: scale(1);
+    }
+
+    50%{
+        transform: scale(1.06);
+    }
+
+    100%{
+        transform: scale(1);
+    }
+
 }
 </style>
 </head>
