@@ -1026,22 +1026,48 @@ background: transparent;
 #backBtn{
     display:none;
 
-    position: fixed;
-    top: 15px;
-    left: 15px;
-    z-index: 9999;
+    position:fixed;
+    top:18px;
+    left:18px;
+    z-index:9999;
 
-    padding: 10px 16px;
-    border: none;
-    border-radius: 25px;
+    padding:12px 18px;
 
-    background: rgba(255,255,255,0.2);
-    backdrop-filter: blur(10px);
+    border:1px solid rgba(255,255,255,0.35);
+    border-radius:50px;
 
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
+    background:rgba(255,255,255,0.15);
+    backdrop-filter:blur(16px);
+    -webkit-backdrop-filter:blur(16px);
+
+    color:#fff;
+    font-size:15px;
+    font-weight:700;
+    letter-spacing:.3px;
+
+    cursor:pointer;
+
+    box-shadow:
+        0 8px 25px rgba(0,0,0,.15),
+        inset 0 1px 1px rgba(255,255,255,.3);
+
+    transition:all .3s ease;
 }
+
+#backBtn:hover{
+    transform:translateY(-2px) scale(1.05);
+
+    background:rgba(255,255,255,0.22);
+
+    box-shadow:
+        0 12px 35px rgba(255,255,255,.15),
+        0 8px 25px rgba(0,0,0,.2);
+}
+
+#backBtn:active{
+    transform:scale(.96);
+}
+   
 </style>
 </head>
 
