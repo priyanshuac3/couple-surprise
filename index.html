@@ -1023,7 +1023,9 @@ background: transparent;
     }
 
 }
-  #backBtn{
+#backBtn{
+    display:none;
+
     position: fixed;
     top: 15px;
     left: 15px;
@@ -1476,6 +1478,7 @@ function continuePage() {
         document.getElementById("loveScreen");
 
     loveScreen.classList.remove("hidden");
+  document.getElementById("backBtn").style.display = "block";
 
 
     // ===============================
@@ -1890,7 +1893,8 @@ updatePreview();
         heart.remove();
     }, 8000);
 }
-function goBack(){
+
+  function goBack(){
 
     const loveScreen =
         document.getElementById("loveScreen");
@@ -1901,20 +1905,20 @@ function goBack(){
     const container =
         document.querySelector(".container");
 
-    // Final Page → Love Question Page
+    const backBtn =
+        document.getElementById("backBtn");
+
     if(
         successScreen &&
         !successScreen.classList.contains("hidden")
     ){
 
         successScreen.classList.add("hidden");
-
         loveScreen.classList.remove("hidden");
 
         return;
     }
 
-    // Love Question Page → Main Form Page
     if(
         loveScreen &&
         !loveScreen.classList.contains("hidden")
@@ -1924,11 +1928,11 @@ function goBack(){
 
         container.style.display = "block";
 
+        backBtn.style.display = "none";
+
         return;
     }
-
 }
- 
 </script>
 
 
