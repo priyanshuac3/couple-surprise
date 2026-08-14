@@ -790,8 +790,8 @@ background: transparent;
  .no-btn{
     position:relative;
     color:#ffffff;
-   width:135px;
-   height:58px;
+   width:105px;
+   height:46px;
    
 
     background:rgba(255,255,255,0.15);
@@ -872,22 +872,23 @@ background: transparent;
     .big-heart{font-size:68px}
     .love-card h2{font-size:24px;
       max-width: 360px;           }
-   .love-buttons{
-    gap:14px;
-    margin-top:22px;
-    margin-bottom:22px;
-}
+    .love-buttons{
+        gap:12px;
+    }
 
-.yes-btn,
-.no-btn{
-    flex:0 0 135px;
-    height:58px;
-    padding:0;
-    border-radius:30px;
-    font-size:18px;
-    font-weight:700;
+    .yes-btn,
+    .no-btn{
+        flex:none;
+        width:105px;
+        height:46px;
+
+        min-width:105px;
+        padding:0;
+
+        font-size:15px;
+        border-radius:24px;
+    }
 }
-  }
 
   @media(prefers-reduced-motion:reduce){
     .love-screen,.success-screen,.big-heart,.yes-btn,.tiny-hearts{animation:none !important}
