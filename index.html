@@ -1030,6 +1030,23 @@ background: transparent;
 
     animation:videoFloat 4s ease-in-out infinite;
 }
+  .video-card::before{
+    content:"";
+    position:absolute;
+    inset:-8px;
+    z-index:-1;
+    border-radius:28px;
+
+    background:linear-gradient(
+        135deg,
+        #ff4f87,
+        #ff8fab,
+        #9b5de5
+    );
+
+    filter:blur(20px);
+    opacity:.6;
+}
 .video-card video{
     width:100%;
     display:block;
