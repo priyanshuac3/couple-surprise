@@ -1011,32 +1011,31 @@ background: transparent;
 .intro-mini-hearts{margin-top:15px;color:rgba(255,190,220,.8);letter-spacing:7px;font-size:14px;}
 
 .video-card{
-    width:260px;
-    max-width:75%;
+    width:280px;
+    max-width:85%;
+    margin:20px auto;
 
-    margin:25px auto;
+    padding:4px;
 
     border-radius:24px;
-    overflow:hidden;
 
-    background:rgba(255,255,255,0.12);
+    background:rgba(255,255,255,0.18);
+    border:1px solid rgba(255,255,255,0.35);
+
     backdrop-filter:blur(12px);
-
-    border:1px solid rgba(255,255,255,0.25);
+    -webkit-backdrop-filter:blur(12px);
 
     box-shadow:
-        0 0 25px rgba(255,105,180,.45),
-        0 0 60px rgba(255,105,180,.25);
+        0 10px 30px rgba(255,105,180,0.25),
+        0 0 20px rgba(255,255,255,0.15);
 
-    animation:videoFloat 4s ease-in-out infinite;
+    overflow:hidden;
 }
 .video-card video{
     width:100%;
     display:block;
-    max-height: 220px;
-  object-fit: cover;
+    border-radius:20px;
 }
-
 .forever-text{
     color:white;
     text-align:center;
