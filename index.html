@@ -1667,11 +1667,20 @@ const rightLimit = window.innerWidth - 160;
     }
 
     // On smaller screens keep the button inside the card.
-    const maxX = Math.max(35, Math.min(105, area.clientWidth * 0.28));
-    const maxY = 48;
-    const x = Math.random() * (maxX * 2) - maxX;
-    const y = Math.random() * (maxY * 2) - maxY;
+   const positions = [
+    {x:-120,y:-140},
+    {x:120,y:-140},
+    {x:-130,y:80},
+    {x:130,y:80},
+    {x:-160,y:-30},
+    {x:160,y:-30},
+    {x:0,y:120}
+];
 
+const pos = positions[Math.floor(Math.random() * positions.length)];
+
+button.style.transform =
+    `translate(${pos.x}px, ${pos.y}px)`;
     button.classList.add("runaway");
     button.style.transform = `translate(${x}px, ${y}px) rotate(${Math.random() * 10 - 5}deg)`;
 
