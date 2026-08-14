@@ -821,13 +821,60 @@ background: transparent;
     box-shadow:0 8px 25px rgba(60,20,80,.15);
   }
 
-  .success-screen{
+ .success-screen{
+    background: linear-gradient(
+        135deg,
+        #ff4f8b,
+        #ff7b54,
+        #ffb300,
+        #ffd54f,
+        #ff7b54,
+        #ff4f8b
+    );
+
+    background-size: 400% 400%;
+    animation: flowingGradient 12s ease-in-out infinite;
+}
+
+@keyframes flowingGradient{
+    0%{
+        background-position: 0% 100%;
+    }
+    25%{
+        background-position: 100% 0%;
+    }
+    50%{
+        background-position: 100% 100%;
+    }
+    75%{
+        background-position: 0% 0%;
+    }
+    100%{
+        background-position: 0% 100%;
+    }
+}
+.success-screen::before{
+    content:"";
+    position:absolute;
+    inset:-30%;
     background:
-      radial-gradient(circle at 50% 35%, rgba(255,255,255,.9), transparent 28%),
-      linear-gradient(135deg,#ff4f87,#ff8fab,#9b5de5,#5b8def);
-    background-size:180% 180%;
-    animation:loveBg 10s ease-in-out infinite alternate;
-  }
+      radial-gradient(circle,#ffd54f 0%,transparent 45%),
+      radial-gradient(circle,#ff4f8b 0%,transparent 50%);
+    animation: blobMove 15s ease-in-out infinite;
+    pointer-events:none;
+}
+
+@keyframes blobMove{
+    0%{
+        transform:translate(-15%,-10%) rotate(0deg);
+    }
+    50%{
+        transform:translate(15%,10%) rotate(180deg);
+    }
+    100%{
+        transform:translate(-15%,-10%) rotate(360deg);
+    }
+}
   
   .success-heart{
     position:relative;
