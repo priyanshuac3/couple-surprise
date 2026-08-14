@@ -1013,12 +1013,23 @@ background: transparent;
 .video-card{
     width:320px;
     max-width:90%;
-    margin:25px auto;
-    border-radius:20px;
-    overflow:hidden;
-    box-shadow:0 0 30px rgba(255,105,180,0.6);
-}
 
+    margin:25px auto;
+
+    border-radius:24px;
+    overflow:hidden;
+
+    background:rgba(255,255,255,0.12);
+    backdrop-filter:blur(12px);
+
+    border:1px solid rgba(255,255,255,0.25);
+
+    box-shadow:
+        0 0 25px rgba(255,105,180,.45),
+        0 0 60px rgba(255,105,180,.25);
+
+    animation:videoFloat 4s ease-in-out infinite;
+}
 .video-card video{
     width:100%;
     display:block;
@@ -1173,7 +1184,7 @@ background: transparent;
 }
 .success-card h2{
     color:white;
-    font-size:34px;
+    font-size:30px;
     text-shadow:0 0 20px rgba(255,255,255,.4);
 }
   .success-card h5{
@@ -1427,7 +1438,7 @@ background: transparent;
 </h2>
     <br>
     <h5>
-     You're the most amazing person I know.
+     You're the most amazing person I know.<br>
 I love you endlessly 💕 
     </h5>
 <div class="video-card">
