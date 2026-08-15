@@ -1531,6 +1531,14 @@ background: transparent;
   <button id="noBtn" class="no-btn" type="button" onclick="moveNoButton()">
     NO 😏
   </button>
+  <button
+    id="generateBtn"
+    class="yes-btn"
+    style="margin-top:20px;"
+    onclick="generateLink()"
+>
+    🔗 Generate Shareable Link
+</button>
 
 </div>
 
@@ -1579,13 +1587,34 @@ background: transparent;
     <p id="successMessage">
       You just made someone very happy. ❤️
     </p>
-
+<button
+    id="generateBtn2"
+    class="yes-btn"
+    style="margin-top:20px;"
+    onclick="generateLink()"
+>
+    🔗 Generate Shareable Link
+</button>
 
   </div>
 
 </div>
   
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  
 <script>
+const SUPABASE_URL =
+"https://doefosyaeckotvfroukv.supabase.co";
+
+const SUPABASE_KEY =
+"YOUR_ANON_KEY_HERE";
+
+const supabase =
+window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
+  
 const sender = document.getElementById("sender");
 const partner = document.getElementById("partner");
 const question = document.getElementById("question");
@@ -2194,6 +2223,60 @@ function goBack(){
   document.getElementById("backBtn").style.display ="none";
 }
 
+  async function generateLink() {
+
+    const senderName =
+        sender.value.trim();
+
+    const partnerName =
+        partner.value.trim();
+
+    const personalMessage =
+        message.value.trim();
+
+    let selectedQuestion =
+        question.value;
+
+    if(question.value === "custom"){
+        selectedQuestion =
+            customQuestion.value.trim();
+    }
+
+    const slug =
+        Math.random()
+        .toString(36)
+        .substring(2,10);
+
+    const { error } =
+        await supabase
+        .from("lovepages")
+        .insert([
+            {
+                sender_name: senderName,
+                partner_name: partnerName,
+                question: selectedQuestion,
+                message: personalMessage,
+                slug: slug
+            }
+        ]);
+
+    if(error){
+        alert("Error: " + error.message);
+        return;
+    }
+
+    const link =
+        window.location.origin +
+        "/?id=" +
+        slug;
+
+    navigator.clipboard.writeText(link);
+
+    alert(
+        "Link copied!\n\n" +
+        link
+    );
+}
  
 </script>
 
