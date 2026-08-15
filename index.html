@@ -1301,7 +1301,7 @@ background: transparent;
   color: white !important;
    font-family: sans-sarif;
    opacity:1;
-  
+}
 </style>
 </head>
 
@@ -1851,10 +1851,9 @@ const rightLimit = window.innerWidth - 160;
 
 const pos = positions[Math.floor(Math.random() * positions.length)];
 
-button.style.transform =
-    `translate(${pos.x}px, ${pos.y}px)`;
-    button.classList.add("runaway");
-    button.style.transform = `translate(${x}px, ${y}px) rotate(${Math.random() * 10 - 5}deg)`;
+button.classList.add("runaway");
+
+button.style.transform = `translate(${pos.x}px, ${pos.y}px) rotate(${Math.random() * 10 - 5}deg)`;
 
     // After several attempts, make NO hilariously tiny.
     if (noCount >= 5) {
