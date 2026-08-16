@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+-<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -572,17 +572,61 @@ select:focus{
     background-size:180% 180%;
     animation:loveBg 12s ease-in-out infinite alternate;
   }
+.love-screen{
+    background: linear-gradient(
+        135deg,
+        #ff4f8b,
+        #ff7b54,
+        #ffb300,
+        #ffd54f,
+        #ff7b54,
+        #ff4f8b
+    );
 
-  .love-screen::before{
+    background-size: 400% 400%;
+    animation: flowingGradient 12s ease-in-out infinite;
+}
+
+@keyframes flowingGradient{
+    0%{
+        background-position: 0% 100%;
+    }
+    25%{
+        background-position: 100% 0%;
+    }
+    50%{
+        background-position: 100% 100%;
+    }
+    75%{
+        background-position: 0% 0%;
+    }
+    100%{
+        background-position: 0% 100%;
+    }
+}
+  
+.success-screen::before{
     content:"";
     position:absolute;
     inset:-30%;
     background:
-      radial-gradient(circle, rgba(255,255,255,.24) 0 2px, transparent 3px) 0 0/70px 70px,
-      radial-gradient(circle, rgba(255,255,255,.14) 0 2px, transparent 3px) 35px 35px/90px 90px;
-    animation:starsMove 18s linear infinite;
+      radial-gradient(circle,#ffd54f 0%,transparent 45%),
+      radial-gradient(circle,#ff4f8b 0%,transparent 50%);
+    animation: blobMove 15s ease-in-out infinite;
     pointer-events:none;
-  }
+}
+
+@keyframes blobMove{
+    0%{
+        transform:translate(-15%,-10%) rotate(0deg);
+    }
+    50%{
+        transform:translate(15%,10%) rotate(180deg);
+    }
+    100%{
+        transform:translate(-15%,-10%) rotate(360deg);
+    }
+} 
 
   /* Floating love emojis - bottom to top on the YES/NO screen */
   .love-floating-hearts{
@@ -632,9 +676,11 @@ select:focus{
 background: transparent;
     box-shadow: none;
     border: none;
-    padding:20px
-    transform: translateY(-40px)
-  
+    padding:20px;
+    transform: translateY(-40px);
+  }
+  .success-card{
+    transform:none !important;
   }
 
   .love-card::after{
@@ -707,8 +753,8 @@ background: transparent;
 
     font-size: 15px;
     font-weight: 600;
-    font-family: 'Playfair Display', serif;
     font-style: italic;
+    font-family: 'Playfair Display', serif;
 
     text-align: center;
     white-space: nowrap;
@@ -823,13 +869,60 @@ background: transparent;
     box-shadow:0 8px 25px rgba(60,20,80,.15);
   }
 
-  .success-screen{
+ .success-screen{
+    background: linear-gradient(
+        135deg,
+        #ff4f8b,
+        #ff7b54,
+        #ffb300,
+        #ffd54f,
+        #ff7b54,
+        #ff4f8b
+    );
+
+    background-size: 400% 400%;
+    animation: flowingGradient 12s ease-in-out infinite;
+}
+
+@keyframes flowingGradient{
+    0%{
+        background-position: 0% 100%;
+    }
+    25%{
+        background-position: 100% 0%;
+    }
+    50%{
+        background-position: 100% 100%;
+    }
+    75%{
+        background-position: 0% 0%;
+    }
+    100%{
+        background-position: 0% 100%;
+    }
+}
+.success-screen::before{
+    content:"";
+    position:absolute;
+    inset:-30%;
     background:
-      radial-gradient(circle at 50% 35%, rgba(255,255,255,.9), transparent 28%),
-      linear-gradient(135deg,#ff4f87,#ff8fab,#9b5de5,#5b8def);
-    background-size:180% 180%;
-    animation:loveBg 10s ease-in-out infinite alternate;
-  }
+      radial-gradient(circle,#ffd54f 0%,transparent 45%),
+      radial-gradient(circle,#ff4f8b 0%,transparent 50%);
+    animation: blobMove 15s ease-in-out infinite;
+    pointer-events:none;
+}
+
+@keyframes blobMove{
+    0%{
+        transform:translate(-15%,-10%) rotate(0deg);
+    }
+    50%{
+        transform:translate(15%,10%) rotate(180deg);
+    }
+    100%{
+        transform:translate(-15%,-10%) rotate(360deg);
+    }
+}
   
   .success-heart{
     position:relative;
@@ -1013,8 +1106,8 @@ background: transparent;
 .intro-mini-hearts{margin-top:15px;color:rgba(255,190,220,.8);letter-spacing:7px;font-size:14px;}
 
 .video-card{
-    width:260px;
-    max-width:75%;
+    width:300px;
+    max-width:90%;
 
     margin:25px auto;
 
@@ -1205,10 +1298,19 @@ background: transparent;
     color:white;
     font-size:30px;
     text-shadow:0 0 20px rgba(255,255,255,.4);
+  width: 100%;
+    
 }
-  .success-card h5{
-    color: white !important;
+.success-card{
+    position:relative;
+    z-index:100;
 }
+
+.success-card h5{
+    position:relative;
+    z-index:101;
+}
+  
 </style>
 </head>
 
@@ -1315,7 +1417,7 @@ background: transparent;
       </option>
 
       <option value="Will you be my Valentine?">
-        Will you be my girlfriend?
+      Will you be my girlfriend?
       </option>
 
       <option value="Do you love me?">
@@ -1323,7 +1425,7 @@ background: transparent;
       </option>
 
       <option value="Will you stay with me forever?">
-        Will you be my Valentine?
+         Will you be my Valentine?
       </option>
 
       <option value="custom">
@@ -1428,9 +1530,17 @@ background: transparent;
 
   <button id="noBtn" class="no-btn" type="button" onclick="moveNoButton()">
     NO 😏
-  </button>
-
 </div>
+
+     </button>
+  <button
+    id="generateBtn"
+    class="yes-btn"
+    style="margin-top:20px;"
+    onclick="generateLink()"
+>
+    🔗 Generate Shareable Link
+</button>
 
 <div id="noMessage" class="no-message" aria-live="polite"></div>
   </div>
@@ -1456,10 +1566,11 @@ background: transparent;
   YES! ❤️
 </h2>
     <br>
-    <h5>
-     You're the most amazing person I know.<br>
-I love you endlessly 💕 
-    </h5>
+<h5 style="color:white; opacity:1; font-style:sans-serif;">
+  You're the most amazing person I know.<br>
+  I love you endlessly 💞
+</h5>
+    
 <div class="video-card">
    <video
     autoplay
@@ -1477,8 +1588,15 @@ I love you endlessly 💕
       You just made someone very happy. ❤️
     </p>
 
-
   </div>
+  <button
+    id="generateBtn2"
+    class="yes-btn"
+    style="margin-top:20px;"
+    onclick="generateLink()"
+>
+    🔗 Generate Shareable Link
+</button>
 
 </div>
   
@@ -1696,8 +1814,8 @@ function sayYes() {
 
     loveScreen.classList.add("hidden");
     successScreen.classList.remove("hidden");
-setInterval(createFloatingHeart, 400);
-    createConfetti();
+    setInterval(createFloatingHeart, 400);
+  createConfetti();
     createHeartBurst();
 }
 
@@ -1709,13 +1827,13 @@ let noCount = 0;
 
 const noMessages = [
     "Are you sure? 🥺",
-    "Come on, just say yes na 🥹",
-    "Really? 😭",
-    "Try again... it's not gonna bite 😅",
+    "Come on, just say yes na 💕",
+    "Try again...it's not gonna bite? 😭",
     "Please don't do this 🥹",
     "My heart says you meant YES❤️",
     "Nice try 😏",
     "You can't escape love! 💘",
+    "Okay but what if you just...said yes?",
     "Okay... one last chance? 🥺❤️"
 ];
 
@@ -1758,10 +1876,9 @@ const rightLimit = window.innerWidth - 160;
 
 const pos = positions[Math.floor(Math.random() * positions.length)];
 
-button.style.transform =
-    `translate(${pos.x}px, ${pos.y}px)`;
-    button.classList.add("runaway");
-    button.style.transform = `translate(${x}px, ${y}px) rotate(${Math.random() * 10 - 5}deg)`;
+button.classList.add("runaway");
+
+button.style.transform = `translate(${pos.x}px, ${pos.y}px) rotate(${Math.random() * 10 - 5}deg)`;
 
     // After several attempts, make NO hilariously tiny.
     if (noCount >= 5) {
