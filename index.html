@@ -1530,7 +1530,9 @@ background: transparent;
 
   <button id="noBtn" class="no-btn" type="button" onclick="moveNoButton()">
     NO 😏
-  </button>
+</div>
+
+     </button>
   <button
     id="generateBtn"
     class="yes-btn"
@@ -1539,8 +1541,6 @@ background: transparent;
 >
     🔗 Generate Shareable Link
 </button>
-
-</div>
 
 <div id="noMessage" class="no-message" aria-live="polite"></div>
   </div>
@@ -1587,7 +1587,9 @@ background: transparent;
     <p id="successMessage">
       You just made someone very happy. ❤️
     </p>
-<button
+
+  </div>
+  <button
     id="generateBtn2"
     class="yes-btn"
     style="margin-top:20px;"
@@ -1595,8 +1597,6 @@ background: transparent;
 >
     🔗 Generate Shareable Link
 </button>
-
-  </div>
 
 </div>
   
@@ -1607,7 +1607,7 @@ const SUPABASE_URL =
 "https://doefosyaeckotvfroukv.supabase.co";
 
 const SUPABASE_KEY =
-"YOUR_ANON_KEY_HERE";
+"sb_publishable_KegGwmD8rYorlLLkMkGLfg_qgoiGbEI";
 
 const supabase =
 window.supabase.createClient(
@@ -1828,8 +1828,8 @@ function sayYes() {
 
     loveScreen.classList.add("hidden");
     successScreen.classList.remove("hidden");
-setInterval(createFloatingHeart, 400);
-    createConfetti();
+    setInterval(createFloatingHeart, 400);
+  createConfetti();
     createHeartBurst();
 }
 
@@ -2270,14 +2270,57 @@ function goBack(){
         "/?id=" +
         slug;
 
-    navigator.clipboard.writeText(link);
+   try{
+   await navigator.clipboard.writeText(link);
+}
+catch{
+   prompt("Copy this link:", link);
+}
 
     alert(
         "Link copied!\n\n" +
         link
     );
 }
- 
+
+  window.addEventListener("load", async () => {
+
+    const params =
+        new URLSearchParams(
+            window.location.search
+        );
+
+    const slug =
+        params.get("id");
+
+    if(!slug) return;
+
+    const { data, error } =
+        await supabase
+        .from("lovepages")
+        .select("*")
+        .eq("slug", slug)
+        .single();
+
+    if(error || !data){
+        alert("Page not found");
+        return;
+    }
+
+    sender.value =
+        data.sender_name;
+
+    partner.value =
+        data.partner_name;
+
+    message.value =
+        data.message;
+
+    question.value =
+        data.question;
+
+    continuePage();
+});
 </script>
 
 
