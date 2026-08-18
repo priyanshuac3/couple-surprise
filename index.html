@@ -2194,22 +2194,17 @@ function goBack(){
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script>
+<script>
+const SUPABASE_URL = "https://doefosyaeckotvfroukv.supabase.co";
+const SUPABASE_KEY = "sb_publishable_KegGwmD8rYorlLLkMkGLfg_qgoiGbEI";
 
-const SUPABASE_URL =
-"https://doefosyaeckotvfroukv.supabase.co";
-
-const SUPABASE_KEY =
-"sb_publishable_KegGwmD8rYorlLLkMkGLfg_qgoiGbEI";
-
-const supabase =
-window.supabase.createClient(
+// ✅ Variable ka naam badal kar 'supabaseClient' kar diya hai
+const supabaseClient = window.supabase.createClient(
     SUPABASE_URL,
     SUPABASE_KEY
 );
 
 console.log("Supabase Connected ✅");
-
 </script>
 
 </body>
