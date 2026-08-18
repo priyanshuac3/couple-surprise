@@ -2193,7 +2193,24 @@ function goBack(){
 
 </script>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
 
+const SUPABASE_URL =
+"https://doefosyaeckotvfroukv.supabase.co";
+
+const SUPABASE_KEY =
+"sb_publishable_KegGwmD8rYorlLLkMkGLfg_qgoiGbEI";
+
+const supabase =
+window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
+
+console.log("Supabase Connected ✅");
+
+</script>
 
 </body>
 </html>
