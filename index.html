@@ -1434,7 +1434,37 @@ background: transparent;
   justify-content: center;
   gap: 6px;
 }
- 
+
+  /* Animation sirf 'Yay! I knew you'd say YES!' waale text par */
+.success-card h2 {
+  animation: textPopFloat 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards,
+             gentleFloat 3s ease-in-out infinite 1s;
+}
+
+/* Initial Pop-In & Bounce Scale Effect */
+@keyframes textPopFloat {
+  0% {
+    opacity: 0;
+    transform: scale(0.6) translateY(20px);
+  }
+  70% {
+    transform: scale(1.08) translateY(-4px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Continuous Gentle Floating Effect */
+@keyframes gentleFloat {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-5px) scale(1.02);
+  }
+}
 </style>
   
 </head>
