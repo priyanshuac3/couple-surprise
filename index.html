@@ -1384,6 +1384,9 @@ background: transparent;
   font-size: 16px;
   cursor: pointer;
 }
+  .hidden {
+  display: none !important;
+}
   
 </style>
   
@@ -2404,7 +2407,15 @@ window.addEventListener("DOMContentLoaded", async () => {
     }
   }
 });
-  
+  // Jab 'Generate Shareable Link' button par click hoga tabhi khulega
+function openPaymentModal() {
+  document.getElementById("paymentModal").classList.remove("hidden");
+}
+
+// Close (X) button par click karne par band ho jayega
+function closePaymentModal() {
+  document.getElementById("paymentModal").classList.add("hidden");
+}
 </script>
 
   <div id="paymentModal" class="pay-modal-overlay hidden">
