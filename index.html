@@ -1216,9 +1216,9 @@ background: transparent;
   margin-top: 6px;
 }
 
-  /* h2{
+  h2{
     animation: pulseZoom 3s ease-in-out infinite;
-} */
+}
 
   @keyframes pulseZoom{
 
@@ -1433,38 +1433,6 @@ background: transparent;
   align-items: center;
   justify-content: center;
   gap: 6px;
-}
-  .success-card h2{
-  animation:
-    titleReveal 0.8s ease-out forwards,
-    titleFloat 3s ease-in-out infinite 0.8s;
-}
-
-@keyframes titleReveal {
-  0% {
-    opacity: 0;
-    transform: scale(0.8) translateY(20px);
-  }
-
-  60% {
-    opacity: 1;
-    transform: scale(1.08) translateY(0);
-  }
-
-  100% {
-    opacity: 1;
-    transform: scale(1) translateY(0);
-  }
-}
-
-@keyframes titleFloat {
-  0%,100% {
-    transform: translateY(0);
-  }
-
-  50% {
-    transform: translateY(-6px);
-  }
 }
 </style>
   
