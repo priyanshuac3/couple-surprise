@@ -1300,45 +1300,16 @@ background: transparent;
         transform:translateY(0);
     }
 }
-.success-card h2 {
-  color: #ffffff !important;
-  font-family: 'Playfair Display', serif;
+.success-card h2{
+  color:white;
   font-size: 26px !important;
-  font-weight: 700;
-  line-height: 1.2;
-  text-align: center;
-  margin-top: 6px !important;
-  margin-bottom: 6px !important;
-
-  /* Animation exact like video */
-  animation: textPopFloat 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards,
-             gentleFloat 3s ease-in-out infinite 1s;
+  text-shadow:0 0 20px rgba(255,255,255,.4);
+  width:100%;
+  margin-top: 4px !important;
+  margin-bottom:4px !important;
+  
 }
-
-/* Initial Pop-In & Bounce Scale Effect */
-@keyframes textPopFloat {
-  0% {
-    opacity: 0;
-    transform: scale(0.6) translateY(20px);
-  }
-  70% {
-    transform: scale(1.08) translateY(-4px);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1) translateY(0);
-  }
-}
-
-/* Continuous Gentle Breathing/Floating Effect */
-@keyframes gentleFloat {
-  0%, 100% {
-    transform: translateY(0) scale(1);
-  }
-  50% {
-    transform: translateY(-5px) scale(1.02);
-  }
-}
+  
 .success-card{
     position:relative;
     z-index:100;
