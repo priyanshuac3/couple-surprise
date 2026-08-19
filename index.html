@@ -1387,89 +1387,34 @@ background: transparent;
   .hidden {
   display: none !important;
 }
-  
-  /* Success/Love Screen container me flex/padding fix */
-#successScreen, #loveScreen {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  padding-top: 60px; /* Top layout ko thoda upar shift kiya */
-  padding-bottom: 90px; /* Bottom button ke liye clear space */
-  min-height: 100vh;
-  box-sizing: border-box;
-}
-
-/* Big heart icon size reduction */
-#successScreen .big-heart, 
-.heart-header-icon {
-  width: 70px !important;
-  height: 70px !important;
-  margin-bottom: 10px !important;
-}
-
-/* Heading & Subtext spacing */
-#successScreen h1, 
-#successScreen .title {
-  font-size: 26px !important;
-  margin: 5px 0 !important;
-  line-height: 1.2;
-}
-
-#successScreen p, 
-#successScreen .subtitle {
-  font-size: 14px !important;
-  margin: 5px 0 15px 0 !important;
-}
-
-/* Cat Card/Video size adjust */
-#successScreen .media-card, 
-#successScreen img, 
-#successScreen video {
-  max-width: 250px !important;
-  max-height: 250px !important;
-  border-radius: 20px;
-  object-fit: cover;
-}
-
-/* Image ke niche wala inner badge offset fix */
-.image-caption-badge {
-  margin-top: -20px !important; /* Image ke thoda upar overlap hone ke liye */
-  margin-bottom: 25px !important; /* Share button se gap banane ke liye */
-  z-index: 2;
-}
-
-  /* Bottom floating button container */
+  /* Container width kam ki */
 .bottom-action-bar {
   position: fixed;
-  bottom: 20px;
+  bottom: 18px;
   left: 50%;
   transform: translateX(-50%);
-  width: 90%;
-  max-width: 340px; /* Single line me fit hone ke liye adequate width */
+  width: auto; /* Fixed max-width ki jagah auto wrap */
   z-index: 1000;
-  display: flex;
-  justify-content: center;
 }
 
-/* Button Styling */
+/* Compact & Sleek Button */
 .share-trigger-btn {
-  width: 100%;
-  white-space: nowrap; /* Text ko 2 lines me break hone se rokega */
+  white-space: nowrap; /* Text hamesha ek hi line me rahega */
   background: #ffffff;
   color: #ff477e;
   border: none;
-  padding: 14px 20px;
-  border-radius: 30px;
-  font-weight: 700;
-  font-size: 15px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+  padding: 8px 16px; /* Padding kam karke button height choti ki */
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 13px; /* Font size chota kiya */
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 6px;
 }
+ 
 </style>
   
 </head>
