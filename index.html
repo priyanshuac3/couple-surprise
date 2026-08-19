@@ -683,6 +683,7 @@ background: transparent;
   }
   .success-card{
     transform:none !important;
+   padding: 10px 20px 80px !important;
   }
 
   .love-card::after{
@@ -928,7 +929,9 @@ background: transparent;
   
   .success-heart{
     position:relative;
-    font-size:85px;
+    font-size:65px;
+    margin-top: 5px !important;
+    margin-bottom: 5px !important;
     animation:bigHeartBeat 1.2s infinite;
     filter:drop-shadow(0 0 25px rgba(255,60,140,.7));
 }
@@ -936,7 +939,7 @@ background: transparent;
 .success-heart::before{
     content:"";
     position:absolute;
-    inset:-25px;
+    inset:-20px;
     border-radius:50%;
     border:2px solid rgba(255,255,255,.35);
     animation:heartRing 2.5s infinite;
@@ -945,7 +948,7 @@ background: transparent;
 .success-heart::after{
     content:"";
     position:absolute;
-    inset:-45px;
+    inset:-35px;
     border-radius:50%;
     border:2px solid rgba(255,255,255,.18);
     animation:heartRing 2.5s infinite .8s;
@@ -964,7 +967,7 @@ background: transparent;
 }
 
   .success-card h2{color:#ff3f7a}
-  #successMessage{margin-top:15px;color:#78636c;font-size:15px;line-height:1.7}
+  #successMessage{margin-top:6px !important;color:#78636c;font-size:14px;line-height:1.4}
   .success-hearts{margin-top:22px;font-size:23px;letter-spacing:5px;animation:floatTiny 2s ease-in-out infinite}
 
   @keyframes loveCardIn{
@@ -988,9 +991,10 @@ background: transparent;
 
   @media(max-width:600px){
     .love-screen{padding:15px}
+    .success-screen{padding:10px}
     .music-toggle{top:12px;right:12px}
     .love-card{padding:32px 18px 28px;border-radius:28px}
-    .big-heart{font-size:68px}
+    .big-heart{font-size:55px}
     .love-card h2{font-size:24px;
       max-width: 360px;           }
     .love-buttons{
@@ -1111,9 +1115,9 @@ background: transparent;
     width:280px;
     max-width:85%;
 
-    margin:25px auto;
+    margin:8px auto;
 
-    border-radius:24px;
+    border-radius:20px;
     overflow:hidden;
 
     background:rgba(255,255,255,0.12);
@@ -1298,9 +1302,11 @@ background: transparent;
 }
 .success-card h2{
     color:white;
-    font-size:28px;
+    font-size:24px !important;
     text-shadow:0 0 20px rgba(255,255,255,.4);
   width: 100%;
+  margin-top:4px;
+  margin-bottom:4px;
     
 }
 .success-card{
@@ -1311,6 +1317,9 @@ background: transparent;
 .success-card h5{
     position:relative;
     z-index:101;
+    margin-top:2px !important;
+    margin-bottom:4px !important;
+   font-size:13px !important;
 }
 .bottom-action-bar {
   position: fixed;
