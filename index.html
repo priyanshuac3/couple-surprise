@@ -1,6 +1,8 @@
 -<!DOCTYPE html>
 <html lang="en">
 <head>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -1310,8 +1312,81 @@ background: transparent;
     position:relative;
     z-index:101;
 }
+.bottom-action-bar {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+}
+.share-trigger-btn {
+  background: #ffffff;
+  color: #ff477e;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 30px;
+  font-weight: 700;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  cursor: pointer;
+}
+.pay-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.pay-modal-card {
+  background: #fff;
+  padding: 25px;
+  border-radius: 24px;
+  width: 100%;
+  max-width: 360px;
+  text-align: center;
+  position: relative;
+}
+.close-modal {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  border: none;
+  background: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+.coupon-box {
+  display: flex;
+  gap: 8px;
+  margin: 15px 0;
+}
+.coupon-box input {
+  font-size: 12px;
+  padding: 10px;
+}
+.coupon-box button {
+  background: #ff477e;
+  color: #fff;
+  border: none;
+  padding: 0 15px;
+  border-radius: 12px;
+}
+.pay-submit-btn {
+  width: 100%;
+  background: #ff477e;
+  color: #fff;
+  border: none;
+  padding: 14px;
+  border-radius: 16px;
+  font-weight: 700;
+  font-size: 16px;
+  cursor: pointer;
+}
   
 </style>
+  
 </head>
 
 <body>
@@ -2220,7 +2295,138 @@ const supabaseClient = window.supabase.createClient(
 );
 
 console.log("Supabase Connected ✅");
+  let currentCreatedPageId = null;
+
+// 1. Modal Controllers
+function openPaymentModal() {
+  document.getElementById("paymentModal").classList.remove("hidden");
+}
+function closePaymentModal() {
+  document.getElementById("paymentModal").classList.add("hidden");
+}
+
+// 2. Save Data & Payment Processing
+async function processPayment() {
+  const senderVal = sender.value.trim();
+  const partnerVal = partner.value.trim();
+  const messageVal = message.value.trim();
+  let questionVal = question.value === "custom" ? customQuestion.value.trim() : question.value;
+
+  // Supabase me entry save karo
+  const { data, error } = await supabaseClient
+    .from('pages')
+    .insert([
+      { sender: senderVal, partner: partnerVal, question: questionVal, message: messageVal }
+    ])
+    .select();
+
+  if (error || !data.length) {
+    alert("Error saving page details!");
+    return;
+  }
+
+  currentCreatedPageId = data[0].id;
+
+  // Razorpay Gateway Options
+  const options = {
+    "key": "rzp_test_TO9Wz3mUmK2p17", // Yahan apni Razorpay Key dalein
+    "amount": 7900, // Amount in paise (79 INR)
+    "currency": "INR",
+    "name": "LovePage",
+    "description": "Unlock Shareable Love Link",
+    "handler": async function (response) {
+      // Payment Successful - Update DB
+      await supabaseClient
+        .from('pages')
+        .update({ is_paid: true })
+        .eq('id', currentCreatedPageId);
+
+      // Generate Link
+      const shareUrl = window.location.origin + window.location.pathname + "?id=" + currentCreatedPageId;
+      
+      document.getElementById("payBtn").classList.add("hidden");
+      const resultBox = document.getElementById("linkResultBox");
+      resultBox.classList.remove("hidden");
+      document.getElementById("shareableUrlInput").value = shareUrl;
+    },
+    "prefill": {
+      "name": senderVal
+    },
+    "theme": {
+      "color": "#ff477e"
+    }
+  };
+
+  const rzp = new Razorpay(options);
+  rzp.open();
+}
+
+function copyShareLink() {
+  const input = document.getElementById("shareableUrlInput");
+  input.select();
+  navigator.clipboard.writeText(input.value);
+  alert("Link Copied! Apni girlfriend ko bhej do ❤️");
+}
+
+// 3. Direct Load via Shareable Link (?id=...)
+window.addEventListener("DOMContentLoaded", async () => {
+  const urlParams = new URLSearchParams(window.location.search);
+  const pageId = urlParams.get("id");
+
+  if (pageId) {
+    // Data fetch from Supabase
+    const { data, error } = await supabaseClient
+      .from('pages')
+      .select('*')
+      .eq('id', pageId)
+      .single();
+
+    if (data) {
+      // Main form hide karke direct Love Screen load karo
+      document.querySelector(".container").style.display = "none";
+      document.getElementById("musicIntro").classList.add("hide");
+      
+      const loveScreen = document.getElementById("loveScreen");
+      loveScreen.classList.remove("hidden");
+
+      document.getElementById("loveQuestion").innerHTML =
+        data.question.replace(/\?$/, "") + "?<br>" + data.partner + " 💖";
+      
+      document.getElementById("loveFrom").textContent = "From: " + data.sender + " 💌";
+      document.getElementById("successMessage").textContent = data.message;
+
+      // Disable bottom share button for recipient
+      const shareBtns = document.querySelectorAll(".bottom-action-bar");
+      shareBtns.forEach(btn => btn.style.display = "none");
+
+      startFloatingHearts();
+      startMusic();
+    }
+  }
+});
+  
 </script>
+
+  <div id="paymentModal" class="pay-modal-overlay hidden">
+  <div class="pay-modal-card">
+    <button class="close-modal" onclick="closePaymentModal()">×</button>
+    <h3>💌 Unlock & Share — ₹39</h3>
+    
+    <div class="coupon-box">
+      <input type="text" id="couponCode" placeholder="COUPON CODE (OPTIONAL)">
+      <button onclick="applyCoupon()">Apply</button>
+    </div>
+
+    <button id="payBtn" class="pay-submit-btn" onclick="processPayment()">
+      Pay ₹39 & Get Link 💕
+    </button>
+    
+    <div id="linkResultBox" class="hidden">
+      <input type="text" id="shareableUrlInput" readonly>
+      <button onclick="copyShareLink()">📋 Copy Link</button>
+    </div>
+  </div>
+</div>
 
 </body>
 </html>
