@@ -1328,7 +1328,9 @@ background: transparent;
     color: #ffffff !important;   /* Bright white text */
     line-height: 1.5;            /* Natural multi-line spacing */
     letter-spacing: 0.2px;       /* Subtle letter spacing */
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2); /* Soft shadow for contrast *
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2); /* Soft shadow for contrast */
+}
+   
 }
 .bottom-action-bar {
   position: fixed;
@@ -1432,7 +1434,18 @@ background: transparent;
   justify-content: center;
   gap: 6px;
 }
-  
+
+  /* Fix for smooth rendering on mobile GPUs */
+.blob, .heart, .love-float-heart, .floating-heart {
+  will-change: transform, opacity;
+  transform: translateZ(0); /* Hardware acceleration trigger */
+}
+
+/* Fix mobile viewport address bar jump */
+.love-screen, .success-screen, .music-intro {
+  min-height: 100vh;
+  min-height: 100dvh;
+}
 </style>
   
 </head>
@@ -1659,7 +1672,6 @@ background: transparent;
 
   <button id="noBtn" class="no-btn" type="button" onclick="moveNoButton()">
     NO 😏
-  </button>
 </div>
 
 <div id="noMessage" class="no-message" aria-live="polite"></div>
@@ -1915,6 +1927,7 @@ partnerName +
 
     document.getElementById("successMessage").textContent =
         personalMessage;
+
     resetLoveScreen();
 }
 
@@ -1955,58 +1968,39 @@ const noMessages = [
     "Okay but what if you just...said yes?",
     "Okay... one last chance? 🥺❤️"
 ];
+
+// Replace moveNoButton logic for perfect mobile boundaries:
 function moveNoButton() {
     const button = document.getElementById("noBtn");
-    const area = document.getElementById("loveButtons");
-    const messageBox = document.getElementById("noMessage");
-    const yesButton = document.getElementById("yesBtn");
-  const topLimit = 120;
-const bottomLimit = window.innerHeight - 180;
-const leftLimit = 20;
-const rightLimit = window.innerWidth - 160;
-
-    if (!button || !area) return;
+    const container = document.querySelector(".love-card");
+    if (!button || !container) return;
 
     noCount++;
 
+    const messageBox = document.getElementById("noMessage");
     const message = noMessages[Math.min(noCount - 1, noMessages.length - 1)];
     if (messageBox) {
         messageBox.textContent = message;
         messageBox.classList.add("show");
     }
 
-    // Make YES more tempting each time.
-    if (yesButton) {
-        const scale = Math.min(1.18, 1 + noCount * 0.025);
-        
-    }
+    // Dynamic bounding calculation inside view
+    const maxX = Math.min(window.innerWidth / 2 - 60, 140);
+    const maxY = Math.min(window.innerHeight / 3 - 40, 120);
 
-    // On smaller screens keep the button inside the card.
-   const positions = [
-    {x:-120,y:-140},
-    {x:120,y:-140},
-    {x:-130,y:80},
-    {x:130,y:80},
-    {x:-160,y:-30},
-    {x:160,y:-30},
-    {x:0,y:120}
-];
+    const randomX = (Math.random() - 0.5) * maxX * 2;
+    const randomY = (Math.random() - 0.5) * maxY * 2;
 
-const pos = positions[Math.floor(Math.random() * positions.length)];
+    button.classList.add("runaway");
+    button.style.transform = `translate(${randomX}px, ${randomY}px) rotate(${(Math.random() - 0.5) * 15}deg)`;
 
-button.classList.add("runaway");
-
-button.style.transform = `translate(${pos.x}px, ${pos.y}px) rotate(${Math.random() * 10 - 5}deg)`;
-
-    // After several attempts, make NO hilariously tiny.
     if (noCount >= 5) {
-        const size = Math.max(0.58, 1 - (noCount - 4) * 0.08);
+        const size = Math.max(0.6, 1 - (noCount - 4) * 0.08);
         button.style.scale = size;
         button.textContent = noCount >= 8 ? "NO? 🥺" : "NO 😭";
     }
-
-    createTinyHeart(area);
 }
+
 function createTinyHeart(area) {
     const heart = document.createElement("span");
     heart.textContent = ["❤️", "💕", "💖", "✨"][Math.floor(Math.random() * 4)];
@@ -2310,32 +2304,20 @@ updatePreview();
         heart.remove();
     }, 8000);
 }
-function goBack() {
-    // 1. Intervals clear karo
-    if (typeof successHeartInterval !== "undefined" && successHeartInterval) {
-        clearInterval(successHeartInterval);
-        successHeartInterval = null;
-    }
-    if (typeof stopFloatingHearts === "function") {
-        stopFloatingHearts();
-    }
+function goBack(){
 
-    // 2. Screens toggle karo
-    const successScreen = document.getElementById("successScreen");
-    const loveScreen = document.getElementById("loveScreen");
-    const musicIntro = document.getElementById("musicIntro");
-    const container = document.querySelector(".container");
-    const backBtn = document.getElementById("backBtn");
+    document.getElementById("successScreen")
+        .classList.add("hidden");
 
-    if (successScreen) successScreen.classList.add("hidden");
-    if (loveScreen) loveScreen.classList.add("hidden");
-    if (musicIntro) musicIntro.classList.add("hide");
+    document.getElementById("loveScreen")
+        .classList.add("hidden");
 
-    // 3. Main Container wapas show karo
-    if (container) container.style.display = "block";
+    document.getElementById("musicIntro")
+        .classList.add("hide");
 
-    // 4. Back Button hide karo
-    if (backBtn) backBtn.style.display = "none";
+    document.querySelector(".container")
+        .style.display = "block";
+  document.getElementById("backBtn").style.display ="none";
 }
 
 </script>
@@ -2471,12 +2453,80 @@ function closePaymentModal() {
   document.getElementById("paymentModal").classList.add("hidden");
 }
 
+  // Fix: Success screen ke floating hearts interval ko store karke clear karein
+let successHeartInterval = null;
+
+function sayYes() {
+    const loveScreen = document.getElementById("loveScreen");
+    const successScreen = document.getElementById("successScreen");
+
+    stopFloatingHearts();
+
+    const music = document.getElementById("bgMusic");
+    if (music) music.volume = 0.55;
+
+    loveScreen.classList.add("hidden");
+    successScreen.classList.remove("hidden");
+
+    if (successHeartInterval) clearInterval(successHeartInterval);
+    successHeartInterval = setInterval(createFloatingHeart, 400);
+
+    createConfetti();
+    createHeartBurst();
+}
+
+// GoBack call par interval clear zaroor karein
+function goBack(){
+    if (successHeartInterval) clearInterval(successHeartInterval);
+    // ... baaki goBack logic
+}
+
+  // Link loading fix for missing elements check
+window.addEventListener("DOMContentLoaded", async () => {
+  const urlParams = new URLSearchParams(window.location.search);
+  const pageId = urlParams.get("id");
+
+  if (pageId) {
+    const { data, error } = await supabaseClient
+      .from('pages')
+      .select('*')
+      .eq('id', pageId)
+      .maybeSingle();
+
+    if (data) {
+      document.querySelector(".container").style.display = "none";
+      const intro = document.getElementById("musicIntro");
+      if(intro) intro.classList.add("hide");
+      
+      const loveScreen = document.getElementById("loveScreen");
+      loveScreen.classList.remove("hidden");
+
+      document.getElementById("loveQuestion").innerHTML =
+        data.question.replace(/\?$/, "") + "?<br>" + data.partner + " 💖";
+      
+      document.getElementById("loveFrom").textContent = "From: " + data.sender + " 💌";
+      document.getElementById("successMessage").textContent = data.message;
+
+      // Recipient side bottom bar hide
+      document.querySelectorAll(".bottom-action-bar").forEach(btn => btn.style.display = "none");
+
+      startFloatingHearts();
+      startMusic();
+    }
+  }
+});
 </script>
 
   <div id="paymentModal" class="pay-modal-overlay hidden">
   <div class="pay-modal-card">
     <button class="close-modal" onclick="closePaymentModal()">×</button>
     <h3>💌 Unlock & Share — ₹39</h3>
+    
+    <div class="coupon-box">
+      <input type="text" id="couponCode" placeholder="COUPON CODE (OPTIONAL)">
+      <button onclick="applyCoupon()">Apply</button>
+    </div>
+
     <button id="payBtn" class="pay-submit-btn" onclick="processPayment()">
       Pay ₹39 & Get Link 💕
     </button>
