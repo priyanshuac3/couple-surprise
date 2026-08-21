@@ -2475,12 +2475,6 @@ function sayYes() {
     createHeartBurst();
 }
 
-// GoBack call par interval clear zaroor karein
-function goBack(){
-    if (successHeartInterval) clearInterval(successHeartInterval);
-    // ... baaki goBack logic
-}
-
   // Link loading fix for missing elements check
 window.addEventListener("DOMContentLoaded", async () => {
   const urlParams = new URLSearchParams(window.location.search);
