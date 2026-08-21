@@ -1927,7 +1927,6 @@ partnerName +
 
     document.getElementById("successMessage").textContent =
         personalMessage;
-
     resetLoveScreen();
 }
 
@@ -2304,20 +2303,32 @@ updatePreview();
         heart.remove();
     }, 8000);
 }
-function goBack(){
+function goBack() {
+    // 1. Intervals clear karo
+    if (typeof successHeartInterval !== "undefined" && successHeartInterval) {
+        clearInterval(successHeartInterval);
+        successHeartInterval = null;
+    }
+    if (typeof stopFloatingHearts === "function") {
+        stopFloatingHearts();
+    }
 
-    document.getElementById("successScreen")
-        .classList.add("hidden");
+    // 2. Screens toggle karo
+    const successScreen = document.getElementById("successScreen");
+    const loveScreen = document.getElementById("loveScreen");
+    const musicIntro = document.getElementById("musicIntro");
+    const container = document.querySelector(".container");
+    const backBtn = document.getElementById("backBtn");
 
-    document.getElementById("loveScreen")
-        .classList.add("hidden");
+    if (successScreen) successScreen.classList.add("hidden");
+    if (loveScreen) loveScreen.classList.add("hidden");
+    if (musicIntro) musicIntro.classList.add("hide");
 
-    document.getElementById("musicIntro")
-        .classList.add("hide");
+    // 3. Main Container wapas show karo
+    if (container) container.style.display = "block";
 
-    document.querySelector(".container")
-        .style.display = "block";
-  document.getElementById("backBtn").style.display ="none";
+    // 4. Back Button hide karo
+    if (backBtn) backBtn.style.display = "none";
 }
 
 </script>
