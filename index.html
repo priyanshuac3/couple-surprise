@@ -1331,7 +1331,6 @@ background: transparent;
     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2); /* Soft shadow for contrast */
 }
    
-}
 .bottom-action-bar {
   position: fixed;
   bottom: 20px;
@@ -1672,6 +1671,7 @@ background: transparent;
 
   <button id="noBtn" class="no-btn" type="button" onclick="moveNoButton()">
     NO 😏
+  </button>
 </div>
 
 <div id="noMessage" class="no-message" aria-live="polite"></div>
@@ -1931,27 +1931,6 @@ partnerName +
     resetLoveScreen();
 }
 
-
-// ===============================
-// YES BUTTON
-// ===============================
-function sayYes() {
-    const loveScreen = document.getElementById("loveScreen");
-    const successScreen = document.getElementById("successScreen");
-
-    stopFloatingHearts();
-
-    const music = document.getElementById("bgMusic");
-    if (music) music.volume = 0.55;
-
-    loveScreen.classList.add("hidden");
-    successScreen.classList.remove("hidden");
-    setInterval(createFloatingHeart, 400);
-  createConfetti();
-    createHeartBurst();
-}
-
-
 // ===============================
 // NO BUTTON — FUNNY RUNAWAY EFFECT
 // ===============================
@@ -1972,33 +1951,55 @@ const noMessages = [
 // Replace moveNoButton logic for perfect mobile boundaries:
 function moveNoButton() {
     const button = document.getElementById("noBtn");
-    const container = document.querySelector(".love-card");
-    if (!button || !container) return;
+    const area = document.getElementById("loveButtons");
+    const messageBox = document.getElementById("noMessage");
+    const yesButton = document.getElementById("yesBtn");
+  const topLimit = 120;
+const bottomLimit = window.innerHeight - 180;
+const leftLimit = 20;
+const rightLimit = window.innerWidth - 160;
+
+    if (!button || !area) return;
 
     noCount++;
 
-    const messageBox = document.getElementById("noMessage");
     const message = noMessages[Math.min(noCount - 1, noMessages.length - 1)];
     if (messageBox) {
         messageBox.textContent = message;
         messageBox.classList.add("show");
     }
 
-    // Dynamic bounding calculation inside view
-    const maxX = Math.min(window.innerWidth / 2 - 60, 140);
-    const maxY = Math.min(window.innerHeight / 3 - 40, 120);
+    // Make YES more tempting each time.
+    if (yesButton) {
+        const scale = Math.min(1.18, 1 + noCount * 0.025);
+        
+    }
 
-    const randomX = (Math.random() - 0.5) * maxX * 2;
-    const randomY = (Math.random() - 0.5) * maxY * 2;
+    // On smaller screens keep the button inside the card.
+   const positions = [
+    {x:-120,y:-140},
+    {x:120,y:-140},
+    {x:-130,y:80},
+    {x:130,y:80},
+    {x:-160,y:-30},
+    {x:160,y:-30},
+    {x:0,y:120}
+];
 
-    button.classList.add("runaway");
-    button.style.transform = `translate(${randomX}px, ${randomY}px) rotate(${(Math.random() - 0.5) * 15}deg)`;
+const pos = positions[Math.floor(Math.random() * positions.length)];
 
+button.classList.add("runaway");
+
+button.style.transform = `translate(${pos.x}px, ${pos.y}px) rotate(${Math.random() * 10 - 5}deg)`;
+
+    // After several attempts, make NO hilariously tiny.
     if (noCount >= 5) {
-        const size = Math.max(0.6, 1 - (noCount - 4) * 0.08);
+        const size = Math.max(0.58, 1 - (noCount - 4) * 0.08);
         button.style.scale = size;
         button.textContent = noCount >= 8 ? "NO? 🥺" : "NO 😭";
     }
+
+    createTinyHeart(area);
 }
 
 function createTinyHeart(area) {
