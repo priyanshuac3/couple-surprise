@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -1434,6 +1435,27 @@ background: transparent;
   justify-content: center;
   gap: 6px;
 }
+  /* Success card aur animated elements ko smooth banane ke liye */
+.success-card, .success-card h2, .success-card h5 {
+  will-change: transform, opacity;
+  transform: translateZ(0); /* Force GPU rendering */
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+  /* Mobile devices ke liye performance media query */
+@media (max-width: 768px) {
+  /* Dynamic backdrop blur ko kam karo */
+  .success-card, .glass-container {
+    backdrop-filter: blur(5px) !important; /* High blur (e.g. 15px/20px) ko kam kiya */
+    -webkit-backdrop-filter: blur(5px) !important;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15) !important; /* Simple shadow */
+  }
+
+  /* Infinite float animation agar lag kar rahi hai to mobile pe freeze/simple rakhein */
+  .success-card h2 {
+    animation: textPopFloat 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards !important; /* Only pop-in, remove infinite floating on low-end mobile */
+  }
+}
 </style>
   
 </head>
@@ -2461,6 +2483,41 @@ function openPaymentModal() {
 function closePaymentModal() {
   document.getElementById("paymentModal").classList.add("hidden");
 }
+function handlePaymentSuccess(response) {
+  // 1. Instant UI Feedback (Loader ya temporary message dikhao bina lag ke)
+  showLoadingState();
+
+  const uniqueId = 'love_' + Math.random().toString(36).substring(2, 9);
+  const senderName = document.getElementById('senderName')?.value || 'Anonymous';
+  const customMessage = document.getElementById('customMessage')?.value || '';
+
+  // 2. Non-blocking Supabase call
+  requestAnimationFrame(async () => {
+    try {
+      const { data, error } = await supabaseClient
+        .from('love_pages')
+        .insert([{ 
+          slug: uniqueId, 
+          sender: senderName, 
+          message: customMessage,
+          payment_id: response.razorpay_payment_id
+        }]);
+
+      if (error) throw error;
+
+      const shareableLink = `${window.location.origin}/?id=${uniqueId}`;
+      
+      // Smoothly update UI
+      hideLoadingState();
+      showGeneratedLink(shareableLink);
+
+    } catch (err) {
+      console.error(err);
+      alert('Link generate karne me error aaya!');
+    }
+  });
+}
+  
 </script>
 
   <div id="paymentModal" class="pay-modal-overlay hidden">
